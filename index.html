@@ -2,75 +2,608 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Mục Lục Website</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>Mục Lục Học Tập — Study Index</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa, #e4ecf7);
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap');
+
+        :root {
+            --ink: #1a1a2e;
+            --parchment: #f5f0e8;
+            --parchment-deep: #ebe4d6;
+            --gold: #b8860b;
+            --gold-light: #d4a843;
+            --gold-glow: rgba(184, 134, 11, 0.12);
+            --crimson: #8b1a1a;
+            --sage: #4a6741;
+            --teal: #2a6a6e;
+            --plum: #5c3d6e;
+            --warm-gray: #6b6358;
+            --divider: #d4cbbf;
+            --shadow-soft: rgba(26, 26, 46, 0.06);
+            --shadow-med: rgba(26, 26, 46, 0.12);
+        }
+
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', 'Palatino Linotype', 'Book Antiqua', 'Georgia', serif;
+            background: var(--parchment);
+            color: var(--ink);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* === BACKGROUND TEXTURE === */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 0%, rgba(184, 134, 11, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 100%, rgba(139, 26, 26, 0.04) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* === HEADER === */
+        .page-header {
+            position: relative;
+            text-align: center;
+            padding: 60px 24px 48px;
+            background: linear-gradient(180deg, #1a1a2e 0%, #2d2b3f 100%);
+            color: var(--parchment);
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '☸';
+            position: absolute;
+            font-size: 280px;
+            opacity: 0.03;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .header-ornament {
+            font-size: 18px;
+            letter-spacing: 12px;
+            color: var(--gold);
+            margin-bottom: 16px;
+            opacity: 0;
+            animation: fadeDown 0.8s ease 0.2s forwards;
+        }
+
+        .page-title {
+            font-size: clamp(2rem, 5vw, 3.4rem);
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+            opacity: 0;
+            animation: fadeDown 0.8s ease 0.4s forwards;
+        }
+
+        .page-title strong {
+            font-weight: 600;
+            color: var(--gold-light);
+        }
+
+        .page-subtitle {
+            font-size: 1.15rem;
+            font-weight: 300;
+            font-style: italic;
+            color: rgba(245, 240, 232, 0.55);
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: fadeDown 0.8s ease 0.6s forwards;
+        }
+
+        /* === MAIN CONTAINER === */
+        .main {
+            position: relative;
+            z-index: 1;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 48px 24px 80px;
+        }
+
+        /* === STATS BAR === */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 20px 0 36px;
+            margin-bottom: 12px;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 0.8s forwards;
+        }
+
+        .stat {
             text-align: center;
         }
 
-        .container {
-            margin-top: 80px;
+        .stat-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
         }
 
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 40px;
+        .stat-label {
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--warm-gray);
+            margin-top: 4px;
         }
 
-        ul {
-            list-style: none;
-            padding: 0;
+        /* === SUBJECT SECTION === */
+        .subject {
+            margin-bottom: 48px;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
-        li {
-            margin: 20px 0;
+        .subject.visible {
+            animation: fadeUp 0.6s ease forwards;
         }
 
-        a {
+        .subject-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--divider);
+            margin-bottom: 20px;
+            cursor: pointer;
+            user-select: none;
+            transition: border-color 0.3s;
+        }
+
+        .subject-header:hover {
+            border-bottom-color: var(--gold);
+        }
+
+        .subject-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px var(--shadow-soft);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .subject-header:hover .subject-icon {
+            transform: scale(1.08);
+            box-shadow: 0 4px 14px var(--shadow-med);
+        }
+
+        .subject-info {
+            flex: 1;
+        }
+
+        .subject-name {
+            font-size: 1.55rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+        }
+
+        .subject-name-vi {
+            font-size: 0.95rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--warm-gray);
+            margin-top: 1px;
+        }
+
+        .subject-count {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--warm-gray);
+            background: var(--parchment-deep);
+            padding: 4px 12px;
+            border-radius: 20px;
+            flex-shrink: 0;
+        }
+
+        .subject-toggle {
+            font-size: 1.1rem;
+            color: var(--warm-gray);
+            transition: transform 0.35s ease;
+            flex-shrink: 0;
+        }
+
+        .subject.collapsed .subject-toggle {
+            transform: rotate(-90deg);
+        }
+
+        /* === UNIT LIST === */
+        .unit-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 12px;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.35s ease;
+        }
+
+        .subject.collapsed .unit-list {
+            max-height: 0 !important;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .unit-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: white;
+            border-radius: 10px;
             text-decoration: none;
-            font-size: 20px;
-            color: white;
-            background-color: #3498db;
-            padding: 12px 30px;
+            color: var(--ink);
+            box-shadow: 0 1px 4px var(--shadow-soft);
+            transition: all 0.25s ease;
+            overflow: hidden;
+        }
+
+        .unit-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            border-radius: 3px 0 0 3px;
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+
+        .unit-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--shadow-med);
+        }
+
+        .unit-card:hover::before {
+            opacity: 1;
+        }
+
+        .unit-card:active {
+            transform: translateY(0);
+        }
+
+        .unit-num {
+            width: 36px;
+            height: 36px;
             border-radius: 8px;
-            display: inline-block;
-            transition: 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            transition: transform 0.25s;
         }
 
-        a:hover {
-            background-color: #2c80b4;
-            transform: scale(1.05);
+        .unit-card:hover .unit-num {
+            transform: scale(1.1);
         }
 
-        footer {
-            margin-top: 80px;
-            color: #777;
-            font-size: 14px;
+        .unit-text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .unit-title {
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .unit-subtitle {
+            font-size: 0.82rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--warm-gray);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .unit-arrow {
+            color: var(--warm-gray);
+            opacity: 0;
+            transform: translateX(-6px);
+            transition: all 0.25s;
+            flex-shrink: 0;
+        }
+
+        .unit-card:hover .unit-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* === COLOR THEMES === */
+        .theme-crimson .subject-icon { background: #fdf2f2; color: var(--crimson); }
+        .theme-crimson .unit-num { background: #fdf2f2; color: var(--crimson); }
+        .theme-crimson .unit-card::before { background: var(--crimson); }
+
+        .theme-teal .subject-icon { background: #eef7f7; color: var(--teal); }
+        .theme-teal .unit-num { background: #eef7f7; color: var(--teal); }
+        .theme-teal .unit-card::before { background: var(--teal); }
+
+        .theme-plum .subject-icon { background: #f5f0f8; color: var(--plum); }
+        .theme-plum .unit-num { background: #f5f0f8; color: var(--plum); }
+        .theme-plum .unit-card::before { background: var(--plum); }
+
+        .theme-sage .subject-icon { background: #f0f5ee; color: var(--sage); }
+        .theme-sage .unit-num { background: #f0f5ee; color: var(--sage); }
+        .theme-sage .unit-card::before { background: var(--sage); }
+
+        .theme-gold .subject-icon { background: #fdf8ee; color: var(--gold); }
+        .theme-gold .unit-num { background: #fdf8ee; color: var(--gold); }
+        .theme-gold .unit-card::before { background: var(--gold); }
+
+        /* === FOOTER === */
+        .page-footer {
+            text-align: center;
+            padding: 32px 24px;
+            color: var(--warm-gray);
+            font-size: 0.88rem;
+            font-style: italic;
+        }
+
+        .page-footer .ornament {
+            color: var(--gold);
+            letter-spacing: 8px;
+            margin-bottom: 8px;
+            font-style: normal;
+        }
+
+        /* === ANIMATIONS === */
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 600px) {
+            .page-header { padding: 40px 16px 32px; }
+            .main { padding: 32px 16px 60px; }
+            .stats-bar { gap: 24px; }
+            .subject-header { gap: 12px; }
+            .subject-icon { width: 40px; height: 40px; font-size: 18px; }
+            .subject-name { font-size: 1.3rem; }
+            .unit-list { grid-template-columns: 1fr; }
+            .subject-count { display: none; }
+        }
+
+        /* === PRINT === */
+        @media print {
+            body { background: white; }
+            body::before { display: none; }
+            .page-header { background: none; color: var(--ink); padding: 20px 0; }
+            .page-header::before, .page-header::after { display: none; }
+            .page-title strong { color: var(--ink); }
+            .page-subtitle { color: var(--warm-gray); }
+            .unit-card { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
+            .subject { break-inside: avoid; }
         }
     </style>
 </head>
-
 <body>
 
-<div class="container">
-    <h1>📘 MỤC LỤC WEBSITE</h1>
+<header class="page-header">
+    <div class="header-ornament">◆ ◆ ◆</div>
+    <h1 class="page-title">Mục Lục <strong>Học Tập</strong></h1>
+    <p class="page-subtitle">Study Index — Encyclopaedia of Buddhist Studies</p>
+</header>
 
-    <ul>
-        <li><a href="unit13.html">Bài 13</a></li>
-        <li><a href="unit14.html">Bài 14</a></li>
-        <li><a href="unit15.html">Bài 15</a></li>
-    </ul>
+<main class="main">
+    <div class="stats-bar">
+        <div class="stat">
+            <span class="stat-number" id="totalSubjects">—</span>
+            <span class="stat-label">Môn học</span>
+        </div>
+        <div class="stat">
+            <span class="stat-number" id="totalUnits">—</span>
+            <span class="stat-label">Bài học</span>
+        </div>
+    </div>
 
-    <footer>
-        © 2026 - Phật học từ xa khóa X
-    </footer>
-</div>
+    <div id="subjectContainer"></div>
+</main>
+
+<footer class="page-footer">
+    <div class="ornament">◇ ◇ ◇</div>
+    Cập nhật bài học thường xuyên — Nhấn vào tiêu đề môn học để thu gọn/mở rộng
+</footer>
+
+<script>
+/* ==============================================================
+   📚  DỮ LIỆU MÔN HỌC — CHỈNH SỬA Ở ĐÂY
+   
+   Cấu trúc mỗi môn:
+   {
+     id:       "folder-name",          // tên subfolder
+     name:     "English Name",         // tên tiếng Anh
+     nameVi:   "Tên tiếng Việt",       // tên tiếng Việt
+     icon:     "📖",                   // emoji đại diện
+     theme:    "crimson",              // crimson | teal | plum | sage | gold
+     units: [
+       { num: 1, title: "Title EN", subtitle: "Tiêu đề VN", file: "unit01.html" },
+       ...
+     ]
+   }
+   
+   ➤ Link bài học sẽ tự tạo theo dạng: ./{id}/{file}
+   ➤ Thêm môn mới: copy 1 block { ... } rồi sửa thông tin
+   ➤ Thêm bài mới: thêm dòng trong mảng units
+================================================================ */
+
+const subjects = [
+    {
+        id: "pali",
+        name: "Pāli Canon",
+        nameVi: "Kinh tạng Pāli",
+        icon: "📜",
+        theme: "crimson",
+        units: [
+            { num: 1, title: "Rathavinīta-sutta", subtitle: "Kinh Bảy Pháp", file: "unit01.html" },
+            { num: 2, title: "Satipaṭṭhāna-sutta", subtitle: "Kinh Niệm Xứ", file: "unit02.html" },
+            { num: 3, title: "Dhammacakkappavattana-sutta", subtitle: "Kinh Chuyển Pháp Luân", file: "unit03.html" },
+            { num: 4, title: "Mahāparinibbāna-sutta", subtitle: "Kinh Đại Bát Niết Bàn", file: "unit04.html" },
+            { num: 5, title: "Ānāpānasati-sutta", subtitle: "Kinh Quán Niệm Hơi Thở", file: "unit05.html" },
+            { num: 6, title: "Karanīyametta-sutta", subtitle: "Kinh Từ Bi", file: "unit06.html" },
+            { num: 7, title: "Maṅgala-sutta", subtitle: "Kinh Điềm Lành", file: "unit07.html" },
+            { num: 8, title: "Dhammapada Selections I", subtitle: "Pháp Cú — Phần I", file: "unit08.html" },
+            { num: 9, title: "Dhammapada Selections II", subtitle: "Pháp Cú — Phần II", file: "unit09.html" },
+            { num: 10, title: "Mettā & Brahmavihāra", subtitle: "Từ Bi & Tứ Vô Lượng Tâm", file: "unit10.html" },
+            { num: 11, title: "Paṭiccasamuppāda", subtitle: "Thập Nhị Nhân Duyên", file: "unit11.html" },
+            { num: 12, title: "Anattalakkhaṇa-sutta", subtitle: "Kinh Vô Ngã Tướng", file: "unit12.html" },
+            { num: 13, title: "Acchariyabbhutadhamma-sutta", subtitle: "Kinh Hy Hữu Vị Tằng Hữu Pháp", file: "unit13.html" },
+        ]
+    },
+    {
+        id: "hanvan",
+        name: "Classical Chinese",
+        nameVi: "Hán cổ",
+        icon: "🏯",
+        theme: "teal",
+        units: [
+            { num: 1, title: "Basic Characters & Radicals", subtitle: "Bộ thủ & Chữ cơ bản", file: "unit01.html" },
+            { num: 2, title: "Classical Grammar I", subtitle: "Ngữ pháp Hán văn I", file: "unit02.html" },
+            { num: 3, title: "Classical Grammar II", subtitle: "Ngữ pháp Hán văn II", file: "unit03.html" },
+            { num: 4, title: "Buddhist Chinese Terms", subtitle: "Thuật ngữ Phật giáo Hán văn", file: "unit04.html" },
+            { num: 5, title: "Reading: Heart Sutra", subtitle: "Bát Nhã Tâm Kinh", file: "unit05.html" },
+        ]
+    },
+    {
+        id: "english",
+        name: "Buddhist English",
+        nameVi: "Anh văn Phật Pháp",
+        icon: "☸",
+        theme: "plum",
+        units: [
+            { num: 1, title: "Life of the Buddha", subtitle: "Cuộc đời Đức Phật", file: "unit01.html" },
+            { num: 2, title: "The Four Noble Truths", subtitle: "Tứ Diệu Đế", file: "unit02.html" },
+            { num: 3, title: "The Noble Eightfold Path", subtitle: "Bát Chánh Đạo", file: "unit03.html" },
+            { num: 4, title: "Acchariyabbhutadhamma-sutta", subtitle: "Kinh nói về các hiện tượng hy hữu, kỳ diệu chưa từng có", file: "unit13.html" },
+            { num: 5, title: "THE BUDDHA IN THE WORLD", subtitle: "ĐỨC PHẬT TRÊN THẾ GIAN", file: "unit14.html" },
+            { num: 6, title: "The Heavenly Coral Tree", subtitle: "Thiên hoa san hô", file: "unit15.html" },
+        ]
+    },
+    // ➤ THÊM MÔN MỚI Ở ĐÂY — copy block mẫu bên dưới:
+    /*
+    {
+        id: "ten-folder",
+        name: "Subject Name",
+        nameVi: "Tên tiếng Việt",
+        icon: "📘",
+        theme: "sage",   // crimson | teal | plum | sage | gold
+        units: [
+            { num: 1, title: "Lesson Title", subtitle: "Tiêu đề bài", file: "unit01.html" },
+        ]
+    },
+    */
+];
+
+/* ============================================================== 
+   RENDER — Không cần sửa phần dưới
+============================================================== */
+
+function render() {
+    const container = document.getElementById('subjectContainer');
+    let totalUnits = 0;
+
+    subjects.forEach((subj, si) => {
+        totalUnits += subj.units.length;
+
+        const section = document.createElement('section');
+        section.className = `subject theme-${subj.theme}`;
+        section.style.animationDelay = `${0.9 + si * 0.15}s`;
+
+        const unitsHTML = subj.units.map(u => `
+            <a class="unit-card" href="./${subj.id}/${u.file}" title="${u.title}">
+                <span class="unit-num">${String(u.num).padStart(2, '0')}</span>
+                <span class="unit-text">
+                    <span class="unit-title">${u.title}</span>
+                    <span class="unit-subtitle">${u.subtitle}</span>
+                </span>
+                <span class="unit-arrow">→</span>
+            </a>
+        `).join('');
+
+        section.innerHTML = `
+            <div class="subject-header" onclick="toggleSubject(this)">
+                <div class="subject-icon">${subj.icon}</div>
+                <div class="subject-info">
+                    <div class="subject-name">${subj.name}</div>
+                    <div class="subject-name-vi">${subj.nameVi}</div>
+                </div>
+                <span class="subject-count">${subj.units.length} bài</span>
+                <span class="subject-toggle">▾</span>
+            </div>
+            <div class="unit-list">${unitsHTML}</div>
+        `;
+
+        container.appendChild(section);
+    });
+
+    document.getElementById('totalSubjects').textContent = subjects.length;
+    document.getElementById('totalUnits').textContent = totalUnits;
+
+    // Intersection Observer for scroll animation
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.subject').forEach(el => observer.observe(el));
+}
+
+function toggleSubject(header) {
+    const section = header.closest('.subject');
+    section.classList.toggle('collapsed');
+}
+
+document.addEventListener('DOMContentLoaded', render);
+</script>
 
 </body>
 </html>
