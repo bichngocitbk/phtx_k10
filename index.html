@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 13 - Acchariyabbhutadhamma-sutta (Color-Coded)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 2;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header h2 {
+            color: #DC143C;
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+        
+        .header .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            font-style: italic;
+        }
+        
+        .color-legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 10px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .legend-color {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            margin-right: 12px;
+            border: 2px solid #ddd;
+        }
+        
+        .legend-text {
+            font-size: 0.95em;
+            color: #333;
+        }
+        
+        /* Main color scheme */
+        .en {
+            color: #2C3E50;
+            font-weight: 500;
+            font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+        }
+        
+        .vi {
+            color: #DC143C;
+            font-weight: 300;
+            font-style: italic;
+            font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+            background: #DC143C;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        
+        .vi.revealed {
+            background: transparent;
+        }
+        
+        .pali {
+            color: #F39C12;
+            font-weight: 700;
+            font-style: italic;
+        }
+        
+        .num {
+            color: #8E44AD;
+            font-weight: 700;
+        }
+        
+        .key-phrase {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            border-bottom: 2px solid #ffc107;
+        }
+        
+        .content {
+            font-size: 18px;
+            line-height: 2.2;
+        }
+        
+        .paragraph {
+            margin-bottom: 30px;
+            text-indent: 0;
+        }
+        
+        .section-title {
+            color: #667eea;
+            font-size: 1.5em;
+            margin: 40px 0 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            border-radius: 5px;
+        }
+        
+        .verse-section {
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-radius: 10px;
+            border: 3px solid #e17055;
+        }
+        
+        .verse-title {
+            color: #2c3e50;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .verse {
+            margin: 25px 0;
+            padding: 25px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .verse-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        
+        .verse-line {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+        
+        .citation {
+            text-align: center;
+            margin: 30px 0;
+            padding: 15px;
+            background: #e8f4f8;
+            border-radius: 8px;
+            font-style: italic;
+            color: #2c3e50;
+        }
+        
+        .note-box {
+            margin: 40px 0;
+            padding: 25px;
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            border-radius: 5px;
+        }
+        
+        .note-box h3 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+        
+        .toggle-btn {
+            position: fixed;
+            bottom: 30px;
+            padding: 15px 30px;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .toggle-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .hide-all-btn {
+            left: 30px;
+            background: #e74c3c;
+        }
+        
+        .hide-all-btn:hover {
+            background: #c0392b;
+        }
+        
+        .show-all-btn {
+            right: 30px;
+            background: #667eea;
+        }
+        
+        .show-all-btn:hover {
+            background: #764ba2;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 30px;
+            }
+            
+            .toggle-btn {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .header h2 {
+                font-size: 1.5em;
+            }
+            
+            .content {
+                font-size: 16px;
+                line-height: 2;
+            }
+            
+            .color-legend {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>UNIT 13 (BÀI 13)</h1>
+            <h2>DISCOURSE ON THE WONDERFUL AND MARVELLOUS QUALITIES</h2>
+            <h2>KINH PHÁP HY HỮU, VỊ TẰNG HỮU</h2>
+            <p class="subtitle">
+                <span class="pali">Acchariyabbhutadhamma-sutta</span>(abridged)<br>
+                (Kinh nói về các hiện tượng hy hữu, kỳ diệu chưa từng có) (rút ngắn)
+            </p>
+        </div>
+        
+        <div class="content">
+            <div class="section-title">📖 KINH VĂN CHÍNH / MAIN DISCOURSE</div>
+            
+            <p class="paragraph">
+                <span class="en">Thus have I heard</span> <span class="vi">Như vầy tôi nghe</span>. 
+                <span class="en">At one time</span> <span class="vi">Một thời</span>, 
+                <span class="en">The Lord</span> <span class="vi">Đức Thế Tôn</span>
+                <span class="en">was staying near Sāvatthi</span>
+                <span class="vi">gần thành Sāvatthi (Xá Vệ)</span>, 
+                <span class="en">in the Jeta Grove</span> 
+                <span class="vi">trong tinh xá Jetavana (Kỳ Viên)</span>. 
+                <span class="en">Then</span> <span class="vi">Lúc ấy</span>
+                <span class="en">the conversation arose</span> 
+                <span class="vi">khởi lên những lời tán thán</span>
+                <span class="en">among the monks</span> <span class="vi">giữa các chư vị Tỳ kheo</span>
+                <span class="en">in the assembly hall</span> 
+                <span class="pali">Upatthānasālā</span>
+                <span class="vi">trong Thị giả đường</span>:
+            </p>
+            
+            <p class="paragraph">
+                "<span class="en">How wonderful</span> <span class="vi">Thật kỳ diệu thay</span>, 
+                <span class="en">your reverences</span> <span class="vi">này các Hiền giả</span>, 
+                <span class="en">how marvellous</span> <span class="vi">thật hy hữu thay</span>, 
+                <span class="en">are the great psychic power</span> 
+                <span class="vi">là đại thần thông</span>
+                <span class="en">and the great majesty</span> <span class="vi">và đại oai lực</span>
+                <span class="en">of the</span> <span class="pali">Tathāgata</span> 
+                <span class="vi">của Đức Như Lai</span>, 
+                <span class="en">that he should know</span> <span class="vi">Ngài rõ biết</span>
+                <span class="en">of Former Awakened Ones</span> <span class="vi">chư Phật quá khứ</span>, 
+                <span class="en">who have attained</span> <span class="pali">Nibbāna</span> 
+                <span class="vi">là những vị đã chứng đắc Niết bàn</span>, 
+                <span class="en">who have cut off obstacles</span> 
+                <span class="vi">đã đoạn tận các chướng ngại</span>, 
+                <span class="en">who have ended the cycle</span> 
+                <span class="vi">đã chấm dứt vòng sinh tử luân hồi</span>, 
+                <span class="en">who have escaped from all sorrow</span> 
+                <span class="vi">đã thoát ly mọi phiền não</span>."
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">Then</span> <span class="vi">Sau đó</span>
+                <span class="en">The Lord</span> <span class="vi">Đức Thế Tôn</span>, 
+                <span class="en">emerging from meditation</span> <span class="vi">xuất định</span>
+                <span class="en">toward the evening</span> <span class="vi">vào khoảng buổi chiều</span>, 
+                <span class="en">approached</span> <span class="vi">Ngài đến gần</span>
+                <span class="en">the Hall</span> <span class="vi">giảng đường</span>
+                <span class="en">and addressed</span> <span class="vi">và bảo</span>
+                <span class="en">the Venerable</span> <span class="pali">Ānanda</span> 
+                <span class="vi">Tôn giả Ānanda</span>:
+            </p>
+            
+            <p class="paragraph">
+                <span class="pali">Ānanda</span> <span class="vi">Này Ānanda</span>, 
+                <span class="en">deliver at greater length</span> 
+                <span class="vi">hãy nói đầy đủ chi tiết</span>
+                <span class="en">the</span> <span class="pali">Tathāgata's</span><span class="en"> wonderful and marvellous qualities</span> 
+                <span class="vi">các pháp hy hữu và vị tằng hữu của Như Lai.</span>
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">Face to face with The Lord</span> 
+                <span class="vi">Bạch Đức Thế Tôn</span>, 
+                <span class="en">I have learnt this</span> <span class="vi">con đã biết được điều này</span>: 
+                "<span class="en">The</span> <span class="pali">Bodhisatta</span> 
+                <span class="vi">Khi Bồ Tát</span>
+                <span class="en">arose</span> <span class="vi">hóa sinh</span>
+                <span class="en">in the</span> <span class="pali">Tusita</span> 
+                <span class="en">Group</span> <span class="vi">ở cõi trời Đâu suất</span>, 
+                <span class="en key-phrase">mindful and clearly conscious</span> 
+                <span class="vi">Ngài chánh niệm tỉnh giác</span>"… 
+                <span class="en">I regard this</span> <span class="vi">Con xem điều này</span>
+                <span class="en">as a wonder</span> <span class="vi">như một trong những pháp hy hữu</span>, 
+                <span class="en">a marvellous quality</span> <span class="vi">và vị tằng hữu</span>
+                <span class="en">of The Lord's</span> <span class="vi">của Đức Thế Tôn</span>.
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">The</span> <span class="pali">Bodhisatta</span> 
+                <span class="vi">Bồ Tát</span>
+                <span class="en">remained</span> <span class="vi">an trú</span>
+                <span class="en">in the</span> <span class="pali">Tusita</span> 
+                <span class="en">Group</span> <span class="vi">ở cõi trời Đâu Suất</span>, 
+                <span class="en key-phrase">mindful and clearly conscious</span> 
+                <span class="vi">chánh niệm tỉnh giác</span>, 
+                <span class="en">as long as his life-span lasted</span> 
+                <span class="vi">cho đến khi thọ mạng của Ngài kết thúc</span>.
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">The</span> <span class="pali">Bodhisatta</span> 
+                <span class="vi">Bồ Tát</span>, 
+                <span class="en">passing away from</span> <span class="vi">khi rời khỏi</span>
+                <span class="en">the</span> <span class="pali">Tusita</span> 
+                <span class="en">Group</span> <span class="vi">cung trời Đâu suất</span>, 
+                <span class="en key-phrase">mindful and clearly conscious</span> 
+                <span class="vi">chánh niệm tỉnh giác</span>, 
+                <span class="en">entered his mother's womb</span> <span class="vi">nhập mẫu thai</span>.
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">When the</span> <span class="pali">Bodhisatta</span> 
+                <span class="vi">Khi Bồ Tát</span>, 
+                <span class="en">having passed away from the</span> <span class="pali">Tusita</span> 
+                <span class="vi">rời khỏi cung trời Đâu suất</span>, 
+                <span class="en">entered his mother's womb</span> <span class="vi">và nhập mẫu thai</span>, 
+                <span class="en key-phrase">an illimitable glorious radiance</span> 
+                <span class="vi">một nguồn ánh sáng huy hoàng vô hạn lượng</span>, 
+                <span class="en">surpassing the glory of gods</span> 
+                <span class="vi">vượt xa ánh sáng chư Thiên</span>, 
+                <span class="en">appeared</span> <span class="vi">xuất hiện</span>
+                <span class="en">in the worlds</span> <span class="vi">trong thế giới</span>
+                <span class="en">with the Gods</span> <span class="vi">của các vị chư Thiên</span>, 
+                <span class="en">the</span> <span class="pali">Māras</span> 
+                <span class="vi">Ma Vương</span>, 
+                <span class="en">and the</span> <span class="pali">Brahmās</span> 
+                <span class="vi">Phạm Thiên</span>, 
+                <span class="en">and men</span> <span class="vi">và loài người</span>. 
+                <span class="en">Even in those spaces</span> 
+                <span class="vi">Ngay cả trong những khoảng không</span>
+                <span class="en">between the worlds</span> <span class="vi">giữa các thế giới</span>, 
+                <span class="en">baseless and dark</span> 
+                <span class="vi">nơi vô cùng tối tăm và không đáy</span>, 
+                <span class="en">where</span> <span class="vi">nơi mà</span>, 
+                <span class="en">even the moon and the sun</span> 
+                <span class="vi">dầu cho ánh sáng mặt trăng và mặt trời</span>, 
+                <span class="en">so powerful and majestic</span> 
+                <span class="vi">đại hùng, đại lực như vậy</span>, 
+                <span class="en">can not make their light prevail</span> 
+                <span class="vi">cũng không thể chiếu sáng tới</span>, 
+                <span class="en">even there</span> <span class="vi">thì ngay những nơi ấy</span>
+                <span class="en">appeared</span> <span class="vi">đã xuất hiện</span>
+                <span class="en">the illimitable radiance</span> 
+                <span class="vi">nguồn ánh sáng vô hạn lượng ấy</span>. 
+                <span class="en">And the beings</span> <span class="vi">Và chúng sinh</span>
+                <span class="en">who happened to be there</span> <span class="vi">ở nơi ấy</span>, 
+                <span class="en">perceiving each other</span> <span class="vi">có thể nhìn thấy nhau</span>, 
+                <span class="en">thought</span> <span class="vi">và nghĩ như vầy</span>: 
+                "<span class="en">Indeed</span> <span class="vi">Thật ra</span>, 
+                <span class="en">there are other beings</span> 
+                <span class="vi">cũng có những chúng sinh khác</span>
+                <span class="en">living here</span> <span class="vi">đang sống ở đây</span>".
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">And the</span> <span class="num">ten-thousand</span> 
+                <span class="en">worlds</span> 
+                <span class="vi">Và mười ngàn thế giới</span>
+                <span class="en">of the universe</span> <span class="vi">trong vũ trụ</span>
+                <span class="en key-phrase">quaked and shook</span> 
+                <span class="vi">rung chuyển, chấn động</span>
+                <span class="en">as there appeared the radiance</span> 
+                <span class="vi">khi ánh sáng ấy xuất hiện</span>…
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">It is the rule that</span>
+                <span class="vi">Theo qui luật</span>, 
+                <span class="en">when the</span> <span class="pali">Bodhisatta</span> 
+                <span class="vi">khi Bồ Tát</span>
+                <span class="en">is entering his mother's womb</span> 
+                <span class="vi">nhập mẫu thai</span>, 
+                <span class="num">four</span> <span class="en">sons of the Gods</span> 
+                <span class="pali">devas</span>
+                <span class="vi"> bốn vị thiên tử</span>
+                <span class="en">approach</span> <span class="vi">đến</span>
+                <span class="en">so as to guard</span> <span class="vi">canh giữ</span>
+                <span class="en">the</span> <span class="num">four</span> 
+                <span class="en">quarters</span> 
+                <span class="vi"> bốn phương</span>
+                <span class="en">saying</span> <span class="vi">và nói</span>: 
+                "<span class="en">Do not let</span> <span class="vi">Đừng để cho</span>
+                <span class="en">a human being</span> <span class="vi">một người</span>
+                <span class="en">or a non-human being</span> <span class="vi">hay một phi nhân nào</span>
+                <span class="en">annoy</span> <span class="vi">quấy nhiễu</span>
+                <span class="en">the</span> <span class="pali">Bodhisatta</span> 
+                <span class="vi">Bồ Tát</span>
+                <span class="en">and his mother</span> <span class="vi">và mẹ Ngài</span>."
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">When he is entering his mother's womb</span> 
+                <span class="vi">Khi Ngài nhập mẫu thai</span>, 
+                <span class="en">his mother</span> <span class="vi">mẹ Ngài</span>
+                <span class="en">is virtuous</span> <span class="vi">giữ giới</span>
+                <span class="en">through her own nature</span> 
+                <span class="vi">theo bản tính tự nhiên</span>, 
+                <span class="en">restrained from taking life (killing)</span> 
+                <span class="vi">không sát sanh</span>, 
+                <span class="en">from taking what is not given</span> 
+                <span class="vi">không trộm cắp</span>, 
+                <span class="en">from wrong conduct</span> <span class="vi">không tà dâm</span>, 
+                <span class="en">from lying speech</span> <span class="vi">không nói dối</span>
+                <span class="en">and from indulgence in strong drinks</span> 
+                <span class="vi">và không tham đắm rượu và các chất gây say nghiện</span>.
+            </p>
+            
+            <p class="paragraph">
+                …<span class="en">no desire arises</span> 
+                <span class="vi">không khởi tâm nhiễm ô nào</span>
+                <span class="en">in his mother</span> <span class="vi">Bà</span>
+                <span class="en">toward men</span> <span class="vi">đối với người nam</span>.
+            </p>
+            
+            <p class="paragraph">
+                …<span class="en">and she is enjoying</span> <span class="vi">Và bà thọ hưởng</span>
+                <span class="en">the</span> <span class="num">five</span> 
+                <span class="en">sense-pleasures</span> 
+                <span class="vi">năm dục lạc</span>, 
+                <span class="en">endowed with</span> <span class="vi">đầy đủ</span>
+                <span class="en">the</span> <span class="num">five</span> 
+                <span class="en">sense-pleasures</span> 
+                <span class="vi">năm dục lạc</span>.
+            </p>
+            
+            <p class="paragraph">
+                …<span class="en">no ailment arises</span> 
+                <span class="vi">Không có bệnh gì khởi lên</span>
+                <span class="en">in his mother</span> <span class="vi">trong bà</span>, 
+                <span class="en">she is at ease</span> <span class="vi">bà thoải mái dễ chịu</span>, 
+                <span class="en">her body is not tired</span> 
+                <span class="vi">thân thể không chút mệt nhọc</span>, 
+                <span class="en">and within her womb</span> <span class="vi">và trong bào thai</span>, 
+                <span class="en">she sees the</span> <span class="pali">Bodhisatta</span> 
+                <span class="vi">bà thấy Bồ Tát</span>, 
+                <span class="en key-phrase">complete in all his limbs</span> 
+                <span class="vi">đầy đủ tứ chi</span>, 
+                <span class="en key-phrase">his sense-organs perfect</span> 
+                <span class="vi">các căn hoàn hảo</span>. 
+                <span class="en">Just as</span> <span class="vi">Ví như</span>
+                <span class="en">a gem of purest water</span> 
+                <span class="vi">một viên ngọc lưu ly trong suốt</span>, 
+                <span class="en">well-cut into</span> <span class="num">eight</span> 
+                <span class="en">facets</span> 
+                <span class="vi">khéo cắt thành tám cạnh</span>, 
+                <span class="en">flawless</span> <span class="vi">không tỳ vết</span>, 
+                <span class="en">might be strung on a thread</span> 
+                <span class="vi">được treo vào một sợi chỉ</span>, 
+                <span class="en">blue or yellow or red or white or orange</span> 
+                <span class="vi">màu xanh, vàng, đỏ, trắng hay cam</span>, 
+                <span class="en">and a man with vision</span> 
+                <span class="vi">và một người có mắt</span>, 
+                <span class="en">having taken it in his hand</span> 
+                <span class="vi">cầm viên ngọc trên tay</span>, 
+                <span class="en">might reflect</span> <span class="vi">sẽ khởi suy nghĩ</span>: 
+                "<span class="en">This is a gem of purest water</span> 
+                <span class="vi">Đây là viên ngọc lưu ly trong sáng nhất</span>".
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">The</span> <span class="pali">Bodhisatta's</span> 
+                <span class="en">mother</span> <span class="vi">Mẹ Bồ Tát</span>
+                <span class="en">dies</span> <span class="vi">qua đời</span>
+                <span class="num">seven</span> <span class="en">days</span> 
+                <span class="vi">bảy ngày</span>
+                <span class="en">after</span> <span class="pali">Bodhisatta</span> 
+                <span class="en">is born</span> <span class="vi">sau khi sanh hạ Bồ Tát</span>
+                <span class="en">and she arises</span> <span class="vi">và bà hóa sanh lên</span>
+                <span class="en">in the</span> <span class="pali">Tusita</span> 
+                <span class="en">Group</span> <span class="vi">cõi trời Đâu suất</span>.
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">The</span> <span class="pali">Bodhisatta's</span> 
+                <span class="en">mother</span> <span class="vi">Mẹ Bồ Tát</span>
+                <span class="en">carries him</span> <span class="vi">mang thai</span>
+                <span class="en">for exactly</span> <span class="num">ten</span> 
+                <span class="en">months</span> 
+                <span class="vi">đúng mười tháng</span>
+                <span class="en">before the child-birth</span> 
+                <span class="vi">trước khi sinh con</span>.
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">She gives birth</span> <span class="vi">Bà sinh</span>
+                <span class="en">to the</span> <span class="pali">Bodhisatta</span> 
+                <span class="vi">Bồ Tát</span>
+                <span class="en">while standing</span> <span class="vi">trong khi đang đứng</span>.
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">When he is issuing from her womb</span> 
+                <span class="vi">Khi Ngài ra khỏi lòng mẹ</span>, 
+                <span class="en">gods</span> <span class="vi">Chư Thiên</span>
+                <span class="en">receive him first</span> <span class="vi">đón mừng Ngài trước,</span>
+                <span class="en">men afterwards</span> <span class="vi">sau đó mới đến loài người</span>.
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">When he is issuing</span> <span class="vi">Khi Ngài ra khỏi lòng mẹ</span>, 
+                <span class="en">he does not touch the earth</span> 
+                <span class="vi">Ngài không chạm đất</span>, 
+                <span class="en">the</span> <span class="num">four</span> 
+                <span class="en">sons of gods</span> 
+                <span class="vi">bốn vị Thiên tử</span>, 
+                <span class="en">having received him</span> 
+                <span class="vi">sau khi đỡ lấy Ngài</span>, 
+                <span class="en">present him</span> <span class="vi">đưa trình Ngài</span>
+                <span class="en">to his mother</span> <span class="vi">với mẫu hậu</span>, 
+                <span class="en">saying</span> <span class="vi">và thưa</span>: 
+                "<span class="en">Rejoice, lady</span> 
+                <span class="vi">Tâu lệnh bà, xin lệnh bà hoan hỷ</span>, 
+                <span class="en">mighty is the son</span> 
+                <span class="vi">vĩ đại thay là vị hoàng nam</span>
+                <span class="en">that is born to you</span> 
+                <span class="vi">được lệnh bà sinh ra</span>".
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">When he is issuing</span> 
+                <span class="vi">Khi Ngài ra khỏi lòng mẹ</span>, 
+                <span class="en key-phrase">he is quite stainless</span> 
+                <span class="vi">Ngài hoàn toàn vô nhiễm</span>, 
+                <span class="en key-phrase">undefiled</span> 
+                <span class="vi">không bị cấu uế</span>
+                <span class="en">by watery matter</span> <span class="vi">bởi các thứ nước</span>, 
+                <span class="en">by blood</span> <span class="vi">máu</span>, 
+                <span class="en">by any impurity</span> <span class="vi">hay một vật bất tịnh nào</span>. 
+                <span class="en">It is as when</span> <span class="vi">Ví như</span>
+                <span class="en">a jewel</span> <span class="vi">một viên ngọc</span>
+                <span class="en">is laid on</span> <span class="vi">được đặt trên</span>
+                <span class="en">Benares muslin</span> <span class="vi">lụa tơ Benares</span>, 
+                <span class="en">the jewel</span> <span class="vi">viên ngọc</span>
+                <span class="en">is not stained</span> <span class="vi">không bị</span>
+                <span class="en">by the muslin</span> <span class="vi">tấm lụa làm ô nhiễm</span>, 
+                <span class="en">nor is the muslin stained</span> 
+                <span class="vi">và tấm lụa cũng không bị</span>
+                <span class="en">by it</span> <span class="vi">viên ngọc làm cấu uế</span>.
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">When he is issuing</span> 
+                <span class="vi">Khi Ngài ra khỏi lòng mẹ</span>, 
+                <span class="num">two</span> <span class="en">streams of water</span> 
+                <span class="vi">hai dòng nước</span>
+                <span class="en">appear</span> <span class="vi">xuất hiện</span>
+                <span class="en">from sky</span> <span class="vi">từ hư không</span>, 
+                <span class="en">the one cool</span> <span class="vi">một dòng lạnh</span>, 
+                <span class="en">the other warm</span> <span class="vi">một dòng ấm</span>, 
+                <span class="en">with which</span> <span class="vi">được dùng để</span>
+                <span class="en">they do the bathing</span> <span class="vi">tắm rửa</span>
+                <span class="en">for him and his mother</span> 
+                <span class="vi">Bồ Tát và mẹ Ngài</span>.
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">When he has come to birth</span> 
+                <span class="vi">Khi Ngài ra đời</span>, 
+                <span class="en">standing firm on both feet</span> 
+                <span class="vi">Ngài đứng vững trên hai chân</span>, 
+                <span class="en">facing north</span> <span class="vi">hướng về phía Bắc</span>, 
+                <span class="en">he takes</span> <span class="num">seven</span> 
+                <span class="en">strides</span> 
+                <span class="vi">đi <span class="num">bảy</span> bước</span>, 
+                <span class="en">and while</span> <span class="vi">và</span>
+                <span class="en">a white sunshade</span> <span class="vi">một lọng trắng</span>
+                <span class="en">is held over him</span> <span class="vi">được che lên</span>, 
+                <span class="en">looking around on every side</span> 
+                <span class="vi">Ngài nhìn khắp mọi phương</span>, 
+                <span class="en">he utters</span> <span class="vi">và thốt lên</span>
+                <span class="en">as with the voice of a bull</span> 
+                <span class="vi">như tiếng ngưu vương</span>: 
+                "<span class="en">I am chief in the world</span> 
+                <span class="vi">Ta là bậc tối thượng ở trên đời này</span>, 
+                <span class="en">I am best in the world</span> 
+                <span class="vi">Ta là bậc tối thắng ở trên đời này</span>, 
+                <span class="en">I am eldest in the world</span> 
+                <span class="vi">Ta là bậc tối tôn ở trên đời này</span>! 
+                <span class="en">This is the last birth</span> 
+                <span class="vi">Nay là đời sống cuối cùng</span>, 
+                <span class="en key-phrase">there is no more again-becoming</span> 
+                <span class="vi">không còn phải tái sinh nữa</span>".
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">When he is issuing</span> <span class="vi">Khi Ngài ra đời</span>, 
+                <span class="en">an illimitable glorious radiance</span> 
+                <span class="vi">một ánh hào quang vô lượng thần diệu</span>
+                <span class="en">appears</span> <span class="vi">hiện ra</span>
+                <span class="en">in the world</span> <span class="vi">cùng khắp thế giới</span>
+                <span class="en">as above</span><span class="vi">như trên</span>…
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">Therefore</span> <span class="vi">Vì thế</span>, 
+                <span class="pali">Ānanda</span> <span class="vi">này Ananda</span>, 
+                <span class="en">regard this too</span> <span class="vi">hãy thọ trì điều này</span>
+                <span class="en">as a wonder</span> <span class="vi">như một pháp hy hữu</span>: 
+                "<span class="en">The feelings</span> <span class="vi">Các cảm thọ</span>
+                <span class="en">that arise</span> <span class="vi">khởi lên</span>
+                <span class="en">in the</span> <span class="pali">Tathāgata</span> 
+                <span class="vi">trong Như Lai</span>
+                <span class="en">are known</span> <span class="vi">được Như Lai biết</span>, 
+                <span class="en">they persist</span> <span class="vi">chúng an trú (tồn tại)</span>
+                <span class="en">and they go to destruction</span> 
+                <span class="vi">và đi đến hoại diệt</span>. 
+                <span class="en">The perceptions</span> <span class="vi">Các tưởng</span>, 
+                <span class="en">the thoughts</span> <span class="vi">tầm</span>
+                <span class="en">that arise</span> <span class="vi">khởi lên</span>
+                <span class="en">are known</span> <span class="vi">đều được Như Lai biết</span>, 
+                <span class="en">they persist</span> <span class="vi">chúng an trú</span>
+                <span class="en">and then they go to destruction</span> 
+                <span class="vi">rồi đi đến hoại diệt</span>".
+            </p>
+            
+            <p class="paragraph">
+                <span class="en">Thus spoke</span> <span class="vi">nói như vậy</span>
+                <span class="en">the Venerable</span> <span class="pali">Ānanda</span> 
+                <span class="vi">Tôn giả Ananda</span>. 
+                <span class="en">The Teacher</span> <span class="vi">Đức Thế Tôn</span>
+                <span class="en">approved</span> <span class="vi">chấp nhận</span>. 
+                <span class="en">Delighted</span> <span class="vi">hoan hỷ</span>, 
+                <span class="en">the Bhikkhus</span> <span class="vi">Các Tỳ kheo</span>
+                <span class="en">rejoiced</span> <span class="vi">và tín thọ</span>
+                <span class="en">at what the Venerable</span> <span class="pali">Ānanda</span> 
+                <span class="en">had said</span> 
+                <span class="vi">những lời Tôn giả Ananda vừa nói</span>.
+            </p>
+            
+            <div class="citation">
+                <span class="pali">Majjhima Nikāya</span> III No 123) 
+                <span class="vi">Trung Bộ III, Số 123</span>
+            </div>
+            
+            <div class="verse-section">
+                <div class="section-title" style="background: transparent; border: none; color: #2c3e50;">
+                    🙏 DHAMMAPADA VERSES (PHÁP CÚ)
+                </div>
+                
+                <div class="verse">
+                    <div class="verse-number">Verse 368 (Pháp cú 368):</div>
+                    <div class="verse-line">
+                        <span class="en">A bhikkhu</span> <span class="vi">Tỳ kheo</span>
+                        <span class="en">who dwells in Love</span> 
+                        <span class="pali">mettā</span>
+                        <span class="vi">trú lòng từ</span>,
+                    </div>
+                    <div class="verse-line">
+                        <span class="en">And Faith</span> <span class="vi">Tịnh tín</span>
+                        <span class="en">in the Buddha's Teaching</span> 
+                        <span class="vi">vào pháp Phật</span>,
+                    </div>
+                    <div class="verse-line">
+                        <span class="en">Will attain</span> <span class="vi">Chứng</span>
+                        <span class="en">that state of peace and bliss</span> 
+                        <span class="vi">cảnh giới an lạc</span>,
+                    </div>
+                    <div class="verse-line">
+                        <span class="en">The calming</span> <span class="vi">Tịnh chỉ</span>
+                        <span class="en">of all conditioned things</span> 
+                        <span class="vi">tất cả hành</span>.
+                    </div>
+                </div>
+                
+                <div class="verse">
+                    <div class="verse-number">Verse 369 (Pháp cú 369):</div>
+                    <div class="verse-line">
+                        <span class="en">Empty out</span> <span class="vi">Tát</span>
+                        <span class="en">this boat (the body)</span> 
+                        <span class="vi">thuyền này (thân thể)</span>, 
+                        <span class="en">o bhikkhu</span> <span class="vi">Tỳ-kheo (hãy)</span>,
+                    </div>
+                    <div class="verse-line">
+                        <span class="en">When (it is) emptied</span> 
+                        <span class="vi">Khi thuyền không</span>, 
+                        <span class="en">it will move swiftly</span> 
+                        <span class="vi">nhẹ lướt mau</span>,
+                    </div>
+                    <div class="verse-line">
+                        <span class="en">Cut off</span> <span class="vi">Hãy đoạn</span>
+                        <span class="en">lust</span> <span class="vi">tham</span>, 
+                        <span class="en">and ill-will</span> <span class="vi">sân hận</span>,
+                    </div>
+                    <div class="verse-line">
+                        <span class="en">And then you will reach</span> 
+                        <span class="vi">Sẽ chứng đắc</span>
+                        <span class="pali">Nibbāna</span> <span class="vi">Niết-bàn</span>.
+                    </div>
+                </div>
+                
+                <div class="verse">
+                    <div class="verse-number">Verse 370 (Pháp cú 370):</div>
+                    <div class="verse-line">
+                        <span class="en">Let the bhikkhu</span> <span class="vi">Tỳ kheo</span>
+                        <span class="en">cut off</span> <span class="vi">đoạn</span>
+                        <span class="en">the</span> <span class="num">five</span> 
+                        <span class="en">bonds</span> 
+                        <span class="vi">ngũ kiết</span>,
+                    </div>
+                    <div class="verse-line">
+                        <span class="en">Renounce</span> <span class="vi">Từ bỏ</span>
+                        <span class="en">the other</span> <span class="num">five</span> 
+                        <span class="vi">ngũ kiết nữa</span>,
+                    </div>
+                    <div class="verse-line">
+                        <span class="en">And develop</span> <span class="vi">Tu tập thêm</span>
+                        <span class="num">five</span> <span class="en">more</span> 
+                        <span class="vi">ngũ căn</span>,
+                    </div>
+                    <div class="verse-line">
+                        <span class="en">He who has gone beyond</span> <span class="vi">Vị thoát</span>
+                        <span class="en">the</span> <span class="num">five</span> 
+                        <span class="en">fetters</span> 
+                        <span class="vi">năm kiết sử</span>,
+                    </div>
+                    <div class="verse-line">
+                        <span class="en">Is called</span> <span class="vi">Được gọi</span>
+                        '<span class="en">the one who has crossed the flood</span>' 
+                        ("<span class="vi">Vượt Bộc lưu</span>").
+                    </div>
+                </div>
+                
+                <div class="verse">
+                    <div class="verse-number">Verse 372 (Pháp cú 372):</div>
+                    <div class="verse-line">
+                        <span class="en">There is no concentration</span> 
+                        <span class="vi">Không Thiền</span>
+                        <span class="en">for one who lacks wisdom</span> 
+                        <span class="vi">không trí tuệ</span>,
+                    </div>
+                    <div class="verse-line">
+                        <span class="en">Nor is there wisdom</span> 
+                        <span class="vi">Không trí tuệ</span>
+                        <span class="en">for him who lacks concentration</span> 
+                        <span class="vi">không Thiền</span>,
+                    </div>
+                    <div class="verse-line">
+                        <span class="en">He in whom</span> <span class="vi">Ai</span>
+                        <span class="en">there are both</span> <span class="vi">đủ</span>
+                        <span class="en">concentration and wisdom</span> 
+                        <span class="vi">Thiền, trí tuệ</span>,
+                    </div>
+                    <div class="verse-line">
+                        <span class="en">Is indeed in the presence of</span> 
+                        <span class="vi">Quả thật thấy</span>
+                        <span class="pali">Nibbāna</span> <span class="vi">Niết bàn</span>.
+                    </div>
+                </div>
+                
+                <div class="verse">
+                    <div class="verse-number">Verse 374 (Pháp cú 374):</div>
+                    <div class="verse-line">
+                        <span class="en">When he</span> <span class="vi">Khi người</span>
+                        <span class="en">continually reflects</span> 
+                        <span class="vi">luôn quán sát</span>
+                    </div>
+                    <div class="verse-line">
+                        <span class="en">On the rise and fall</span> 
+                        <span class="vi">Sự sinh diệt</span>
+                        <span class="en">of the</span> <span class="num">Five</span> 
+                        <span class="en">Groups</span> 
+                        <span class="vi">năm uẩn</span>,
+                    </div>
+                    <div class="verse-line">
+                        <span class="en">He experiences</span> <span class="vi">Thọ hưởng</span>
+                        <span class="en">joy and happiness</span> 
+                        <span class="vi">niềm hỷ lạc</span>,
+                    </div>
+                    <div class="verse-line">
+                        <span class="en">As he realizes</span> <span class="vi">Vì đạt đến</span>
+                        <span class="en">the Deathless</span> 
+                        <span class="pali">amata</span>
+                        <span class="vi">bất tử</span>.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="note-box">
+                <h3>💡 GHI CHÚ HỌC TẬP / STUDY NOTES:</h3>
+                
+                <h4>🔑 CÁC CỤM TỪ QUAN TRỌNG CẦN NHỚ:</h4>
+                <ol style="line-height: 2;">
+                    <li>
+                        <span class="en key-phrase">mindful and clearly conscious</span> = 
+                        <span class="vi">chánh niệm tỉnh giác</span>
+                    </li>
+                    <li>
+                        <span class="en key-phrase">illimitable glorious radiance</span> = 
+                        <span class="vi">nguồn ánh sáng huy hoàng vô hạn lượng</span>
+                    </li>
+                    <li>
+                        <span class="en key-phrase">quaked and shook</span> = 
+                        <span class="vi">rung chuyển, chấn động</span>
+                    </li>
+                    <li>
+                        <span class="en key-phrase">cut off obstacles</span> = 
+                        <span class="vi">đoạn tận các chướng ngại</span>
+                    </li>
+                    <li>
+                        <span class="en key-phrase">escaped from all sorrow</span> = 
+                        <span class="vi">thoát ly mọi phiền não</span>
+                    </li>
+                    <li>
+                        <span class="en key-phrase">no more again-becoming</span> = 
+                        <span class="vi">không còn phải tái sinh nữa</span>
+                    </li>
+                    <li>
+                        <span class="en key-phrase">complete in all his limbs</span> = 
+                        <span class="vi">đầy đủ tứ chi</span>
+                    </li>
+                    <li>
+                        <span class="en key-phrase">sense-organs perfect</span> = 
+                        <span class="vi">các căn hoàn hảo</span>
+                    </li>
+                    <li>
+                        <span class="en key-phrase">quite stainless, undefiled</span> = 
+                        <span class="vi">hoàn toàn vô nhiễm, không bị cấu uế</span>
+                    </li>
+                    <li>
+                        <span class="en key-phrase">there is no more again-becoming</span> = 
+                        <span class="vi">không còn phải tái sinh nữa</span>
+                    </li>
+                </ol>
+                
+                <h4 style="margin-top: 20px;">📊 THUẬT NGỮ PALI CHÍNH:</h4>
+                <ul style="line-height: 2;">
+                    <li><span class="pali">Tathāgata</span> = <span class="vi">Như Lai</span></li>
+                    <li><span class="pali">Bodhisatta</span> = <span class="vi">Bồ Tát</span></li>
+                    <li><span class="pali">Nibbāna</span> = <span class="vi">Niết bàn</span></li>
+                    <li><span class="pali">Tusita</span> = <span class="vi">Đâu suất</span></li>
+                    <li><span class="pali">Māras</span> = <span class="vi">Ma Vương</span></li>
+                    <li><span class="pali">Brahmās</span> = <span class="vi">Phạm Thiên</span></li>
+                    <li><span class="pali">mettā</span> = <span class="vi">lòng từ</span></li>
+                    <li><span class="pali">amata</span> = <span class="vi">bất tử</span></li>
+                </ul>
+                
+                <h4 style="margin-top: 20px;">🔢 SỐ TỪ QUAN TRỌNG:</h4>
+                <ul style="line-height: 2;">
+                    <li><span class="num">Four</span> <span class="num">Bốn</span>- four sons of gods, four quarters</li>
+                    <li><span class="num">Five</span> <span class="num">Năm</span>- five sense-pleasures, five bonds, five aggregates</li>
+                    <li><span class="num">Seven</span> <span class="num">Bảy</span>- seven strides, seven days</li>
+                    <li><span class="num">Eight</span> <span class="num">Tám</span>- eight facets</li>
+                    <li><span class="num">Ten</span> <span class="num">Mười</span>- ten months, ten-thousand worlds</li>
+                    <li><span class="num">Two</span> <span class="num">Hai</span>- two streams of water</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <button class="toggle-btn hide-all-btn" onclick="hideAll()">🙈 Hide All</button>
+    <button class="toggle-btn show-all-btn" onclick="revealAll()">👁️ Show All</button>
+    
+    <script>
+        // Click to reveal Vietnamese text
+        document.querySelectorAll('.vi').forEach(el => {
+            el.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.classList.toggle('revealed');
+            });
+        });
+        
+        function revealAll() {
+            document.querySelectorAll('.vi').forEach(el => el.classList.add('revealed'));
+        }
+        
+        function hideAll() {
+            document.querySelectorAll('.vi').forEach(el => el.classList.remove('revealed'));
+        }
+        
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Highlight on hover for better readability
+        document.querySelectorAll('.paragraph').forEach(para => {
+            para.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = '#f8f9fa';
+            });
+            para.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = 'transparent';
+            });
+        });
+    </script>
+</body>
+</html>
