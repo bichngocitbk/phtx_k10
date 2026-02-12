@@ -264,9 +264,8 @@
         }
 
         .subject-header:hover {
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
             transform: translateY(-2px);
-            border-color: var(--purple-soft);
         }
 
         .subject-icon {
@@ -430,9 +429,10 @@
             font-size: 0.92rem;
             font-weight: 600;
             line-height: 1.35;
-            white-space: nowrap;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
             overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .unit-subtitle {
@@ -440,9 +440,10 @@
             font-weight: 300;
             font-style: italic;
             color: var(--ink-muted);
-            white-space: nowrap;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
             overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .unit-arrow {
@@ -460,9 +461,19 @@
         }
 
         /* === COLOR THEMES === */
+        .theme-plum .subject-header {
+            background: linear-gradient(135deg, #7c3aed, #a78bfa);
+            border-color: transparent;
+            color: white;
+        }
+        .theme-plum .subject-name, .theme-plum .subject-name-vi { color: white; }
+        .theme-plum .subject-name-vi { opacity: 0.75; }
+        .theme-plum .subject-count { background: rgba(255,255,255,0.2); color: white; }
+        .theme-plum .subject-toggle { background: rgba(255,255,255,0.2); color: white; }
+        .theme-plum .subject-header:hover .subject-toggle { background: rgba(255,255,255,0.35); }
         .theme-plum .subject-icon {
-            background: linear-gradient(135deg, #f3eaff, #e8d8f8);
-            color: #7c3aed;
+            background: rgba(255,255,255,0.2);
+            color: white;
         }
         .theme-plum .unit-num {
             background: linear-gradient(135deg, #f3eaff, #e8d8f8);
@@ -472,9 +483,19 @@
             background: linear-gradient(180deg, #7c3aed, #a78bfa);
         }
 
+        .theme-teal .subject-header {
+            background: linear-gradient(135deg, #0d9488, #5eead4);
+            border-color: transparent;
+            color: white;
+        }
+        .theme-teal .subject-name, .theme-teal .subject-name-vi { color: white; }
+        .theme-teal .subject-name-vi { opacity: 0.75; }
+        .theme-teal .subject-count { background: rgba(255,255,255,0.2); color: white; }
+        .theme-teal .subject-toggle { background: rgba(255,255,255,0.2); color: white; }
+        .theme-teal .subject-header:hover .subject-toggle { background: rgba(255,255,255,0.35); }
         .theme-teal .subject-icon {
-            background: linear-gradient(135deg, #e0f7f7, #cceeef);
-            color: #0d9488;
+            background: rgba(255,255,255,0.2);
+            color: white;
         }
         .theme-teal .unit-num {
             background: linear-gradient(135deg, #e0f7f7, #cceeef);
@@ -484,9 +505,19 @@
             background: linear-gradient(180deg, #0d9488, #5eead4);
         }
 
+        .theme-crimson .subject-header {
+            background: linear-gradient(135deg, #e11d48, #fb7185);
+            border-color: transparent;
+            color: white;
+        }
+        .theme-crimson .subject-name, .theme-crimson .subject-name-vi { color: white; }
+        .theme-crimson .subject-name-vi { opacity: 0.75; }
+        .theme-crimson .subject-count { background: rgba(255,255,255,0.2); color: white; }
+        .theme-crimson .subject-toggle { background: rgba(255,255,255,0.2); color: white; }
+        .theme-crimson .subject-header:hover .subject-toggle { background: rgba(255,255,255,0.35); }
         .theme-crimson .subject-icon {
-            background: linear-gradient(135deg, #ffe4e6, #fecdd3);
-            color: #e11d48;
+            background: rgba(255,255,255,0.2);
+            color: white;
         }
         .theme-crimson .unit-num {
             background: linear-gradient(135deg, #ffe4e6, #fecdd3);
@@ -496,9 +527,19 @@
             background: linear-gradient(180deg, #e11d48, #fb7185);
         }
 
+        .theme-sage .subject-header {
+            background: linear-gradient(135deg, #16a34a, #86efac);
+            border-color: transparent;
+            color: white;
+        }
+        .theme-sage .subject-name, .theme-sage .subject-name-vi { color: white; }
+        .theme-sage .subject-name-vi { opacity: 0.75; }
+        .theme-sage .subject-count { background: rgba(255,255,255,0.2); color: white; }
+        .theme-sage .subject-toggle { background: rgba(255,255,255,0.2); color: white; }
+        .theme-sage .subject-header:hover .subject-toggle { background: rgba(255,255,255,0.35); }
         .theme-sage .subject-icon {
-            background: linear-gradient(135deg, #e8f5e3, #d4edcf);
-            color: #16a34a;
+            background: rgba(255,255,255,0.2);
+            color: white;
         }
         .theme-sage .unit-num {
             background: linear-gradient(135deg, #e8f5e3, #d4edcf);
@@ -508,9 +549,19 @@
             background: linear-gradient(180deg, #16a34a, #86efac);
         }
 
+        .theme-gold .subject-header {
+            background: linear-gradient(135deg, #d97706, #fbbf24);
+            border-color: transparent;
+            color: white;
+        }
+        .theme-gold .subject-name, .theme-gold .subject-name-vi { color: white; }
+        .theme-gold .subject-name-vi { opacity: 0.75; }
+        .theme-gold .subject-count { background: rgba(255,255,255,0.2); color: white; }
+        .theme-gold .subject-toggle { background: rgba(255,255,255,0.2); color: white; }
+        .theme-gold .subject-header:hover .subject-toggle { background: rgba(255,255,255,0.35); }
         .theme-gold .subject-icon {
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            color: #d97706;
+            background: rgba(255,255,255,0.2);
+            color: white;
         }
         .theme-gold .unit-num {
             background: linear-gradient(135deg, #fef3c7, #fde68a);
@@ -656,9 +707,9 @@ const subjects = [
             { num: 4, title: "Great renunciation and enlightenment, Nibbana", subtitle: "Đại sự xuất thế và giác ngộ niết bàn", file: "unit04.html" },
             { num: 5, title: "The Bbrahma's appeal to The Buddha", subtitle: "Lời Phạm Thiên thỉnh cầu Đức Phật", file: "unit05.html" },
             { num: 6, title: "The turning of the Dhamma wheel", subtitle: "Chuyển Pháp luân", file: "unit06.html" },
-            { num: 13, title: "Acchariyabbhutadhamma-sutta", subtitle: "Kinh nói về các hiện tượng hy hữu, kỳ diệu chưa từng có", file: "unit13_words.html" },
-            { num: 14, title: "The Buddha in the world", subtitle: "Đức Phật trên thế gian", file: "unit14_words.html" },
-            { num: 15, title: "The Heavenly Coral Tree", subtitle: "Thiên hoa san hô", file: "unit15_words.html" },
+            { num: 13, title: "Acchariyabbhutadhamma-sutta", subtitle: "Kinh nói về các hiện tượng hy hữu, kỳ diệu chưa từng có", file: "unit13_split.html" },
+            { num: 14, title: "The Buddha in the world", subtitle: "Đức Phật trên thế gian", file: "unit14_split.html" },
+            { num: 15, title: "The Heavenly Coral Tree", subtitle: "Thiên hoa san hô", file: "unit15_split.html" },
         ]
     },
     {
