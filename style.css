@@ -541,14 +541,24 @@ body {
 }
 .qa-section { margin: 30px 0; }
 .qa-item {
-    margin: 12px 0;
-    padding: 15px 20px;
+    margin: 6px 0;
+    padding: 4px 10px;
     background: #f8f9fa;
     border-radius: 8px;
     border-left: 4px solid #667eea;
 }
 .qa-item:nth-child(even) {
     border-left-color: #00b894;
+}
+.qa-item .split-row {
+    margin-bottom: 0;
+    padding-bottom: 4px;
+    border-bottom: none;
+}
+.qa-item .col-en,
+.qa-item .col-vi {
+    padding: 4px 12px;
+    line-height: 1.8;
 }
 .q-number {
     color: #667eea;
