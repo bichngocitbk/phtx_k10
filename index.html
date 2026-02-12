@@ -425,21 +425,12 @@
 <body>
 
 <header class="page-header">
-    <div class="header-ornament">◆ ◆ ◆</div>
     <h1 class="page-title">Mục Lục <strong>Học Tập</strong></h1>
     <p class="page-subtitle">Study Index — Encyclopaedia of Buddhist Studies</p>
 </header>
 
 <main class="main">
     <div class="stats-bar">
-        <div class="stat">
-            <span class="stat-number" id="totalSubjects">—</span>
-            <span class="stat-label">Môn học</span>
-        </div>
-        <div class="stat">
-            <span class="stat-number" id="totalUnits">—</span>
-            <span class="stat-label">Bài học</span>
-        </div>
     </div>
 
     <div id="subjectContainer"></div>
@@ -480,11 +471,11 @@ const subjects = [
         icon: "☸",
         theme: "plum",
         units: [
-            { num: 04, title: "Great renunciation and enlightenment, Nibbana", subtitle: "Đại sự xuất thế và giác ngộ niết bàn", file: "unit04.html" },
-            { num: 05, title: "The Bbrahma's appeal to The Buddha", subtitle: "Lời Phạm Thiên thỉnh cầu Đức Phật", file: "unit05.html" },
-            { num: 06, title: "The turning of the Dhamma wheel", subtitle: "Chuyển Pháp luân", file: "unit06.html" },
+            { num: 4, title: "Great renunciation and enlightenment, Nibbana", subtitle: "Đại sự xuất thế và giác ngộ niết bàn", file: "unit04.html" },
+            { num: 5, title: "The Bbrahma's appeal to The Buddha", subtitle: "Lời Phạm Thiên thỉnh cầu Đức Phật", file: "unit05.html" },
+            { num: 6, title: "The turning of the Dhamma wheel", subtitle: "Chuyển Pháp luân", file: "unit06.html" },
             { num: 13, title: "Acchariyabbhutadhamma-sutta", subtitle: "Kinh nói về các hiện tượng hy hữu, kỳ diệu chưa từng có", file: "unit13_split.html" },
-            { num: 14, title: "THE BUDDHA IN THE WORLD", subtitle: "ĐỨC PHẬT TRÊN THẾ GIAN", file: "unit14_split.html" },
+            { num: 14, title: "The Buddha in the world", subtitle: "Đức Phật trên thế gian", file: "unit14_split.html" },
             { num: 15, title: "The Heavenly Coral Tree", subtitle: "Thiên hoa san hô", file: "unit15_split.html" },
         ]
     },
@@ -502,6 +493,19 @@ const subjects = [
             { num: 5, title: "Reading: Heart Sutra", subtitle: "Bát Nhã Tâm Kinh", file: "unit05.html" },
         ]
     },
+    
+    // ➤ THÊM MÔN MỚI Ở ĐÂY — copy block mẫu bên dưới:
+    /*
+    {
+        id: "ten-folder",
+        name: "Subject Name",
+        nameVi: "Tên tiếng Việt",
+        icon: "📘",
+        theme: "sage",   // crimson | teal | plum | sage | gold
+        units: [
+            { num: 1, title: "Lesson Title", subtitle: "Tiêu đề bài", file: "unit01.html" },
+        ]
+    },
     {
         id: "pali",
         name: "Pāli Canon",
@@ -517,18 +521,6 @@ const subjects = [
             { num: 6, title: "Karanīyametta-sutta", subtitle: "Kinh Từ Bi", file: "unit06.html" },
         ]
     },
-    // ➤ THÊM MÔN MỚI Ở ĐÂY — copy block mẫu bên dưới:
-    /*
-    {
-        id: "ten-folder",
-        name: "Subject Name",
-        nameVi: "Tên tiếng Việt",
-        icon: "📘",
-        theme: "sage",   // crimson | teal | plum | sage | gold
-        units: [
-            { num: 1, title: "Lesson Title", subtitle: "Tiêu đề bài", file: "unit01.html" },
-        ]
-    },
     */
 ];
 
@@ -538,11 +530,9 @@ const subjects = [
 
 function render() {
     const container = document.getElementById('subjectContainer');
-    let totalUnits = 0;
+
 
     subjects.forEach((subj, si) => {
-        totalUnits += subj.units.length;
-
         const section = document.createElement('section');
         section.className = `subject theme-${subj.theme}`;
         section.style.animationDelay = `${0.9 + si * 0.15}s`;
@@ -573,9 +563,6 @@ function render() {
 
         container.appendChild(section);
     });
-
-    document.getElementById('totalSubjects').textContent = subjects.length;
-    document.getElementById('totalUnits').textContent = totalUnits;
 
     // Intersection Observer for scroll animation
     const observer = new IntersectionObserver((entries) => {
