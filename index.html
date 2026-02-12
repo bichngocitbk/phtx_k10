@@ -80,12 +80,15 @@
 
         /* === HEADER === */
         .page-header {
-            position: relative;
+            position: sticky;
+            top: 0;
+            z-index: 100;
             text-align: center;
-            padding: 72px 24px 56px;
+            padding: 20px 24px;
             background: linear-gradient(135deg, #4a2071 0%, #764ba2 40%, #667eea 100%);
             color: white;
             overflow: hidden;
+            box-shadow: 0 4px 20px rgba(74, 32, 113, 0.25);
         }
 
         .page-header::before {
@@ -101,12 +104,11 @@
         .page-header::after {
             content: '';
             position: absolute;
-            bottom: -2px;
+            bottom: 0;
             left: 0;
             right: 0;
-            height: 80px;
-            background: var(--surface);
-            clip-path: ellipse(55% 100% at 50% 100%);
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), var(--purple-soft), rgba(255,255,255,0.3), transparent);
         }
 
         /* Floating geometric shapes in header */
@@ -117,10 +119,10 @@
             pointer-events: none;
             animation: geoFloat 12s ease-in-out infinite;
         }
-        .geo-1 { width: 120px; height: 120px; top: 15%; left: 8%; animation-delay: 0s; }
-        .geo-2 { width: 80px; height: 80px; top: 60%; right: 12%; animation-delay: -4s; border-radius: 30%; }
-        .geo-3 { width: 60px; height: 60px; top: 25%; right: 25%; animation-delay: -8s; }
-        .geo-4 { width: 40px; height: 40px; bottom: 35%; left: 20%; animation-delay: -2s; border-radius: 30%; }
+        .geo-1 { width: 60px; height: 60px; top: 10%; left: 8%; animation-delay: 0s; }
+        .geo-2 { width: 40px; height: 40px; top: 50%; right: 12%; animation-delay: -4s; border-radius: 30%; }
+        .geo-3 { width: 30px; height: 30px; top: 15%; right: 25%; animation-delay: -8s; }
+        .geo-4 { width: 25px; height: 25px; bottom: 15%; left: 20%; animation-delay: -2s; border-radius: 30%; }
 
         @keyframes geoFloat {
             0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
@@ -152,14 +154,14 @@
 
         .page-title {
             font-family: 'Playfair Display', Georgia, serif;
-            font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+            font-size: clamp(1.4rem, 3vw, 2rem);
             font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+            margin-bottom: 0;
             position: relative;
             z-index: 1;
             opacity: 0;
-            animation: fadeDown 0.7s ease 0.35s forwards;
+            animation: fadeDown 0.7s ease 0.2s forwards;
         }
 
         .page-title strong {
@@ -561,7 +563,7 @@
 
         /* === RESPONSIVE === */
         @media (max-width: 600px) {
-            .page-header { padding: 56px 16px 44px; }
+            .page-header { padding: 16px 16px; }
             .geo-shape { display: none; }
             .main { padding: 24px 16px 60px; }
             .stats-bar { gap: 8px; flex-wrap: wrap; }
@@ -617,7 +619,7 @@
 </main>
 
 <footer class="page-footer">
-    <div class="ornament">✦✦✦</div>
+    <div class="ornament">✦</div>
     Cập nhật bài học thường xuyên — Nhấn vào tiêu đề môn học để thu gọn/mở rộng
 </footer>
 
