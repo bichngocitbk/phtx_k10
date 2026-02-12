@@ -370,6 +370,37 @@ body {
     box-shadow: 0 5px 15px rgba(0,0,0,0.25);
 }
 
+/* Inline word-by-word view (en/vi spans) */
+.en {
+    color: #2C3E50;
+    font-weight: 500;
+}
+
+.vi {
+    color: #DC143C;
+    font-weight: 300;
+    font-style: italic;
+    background: #DC143C;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.vi.revealed {
+    background: transparent;
+}
+
+.paragraph {
+    margin-bottom: 30px;
+    text-indent: 0;
+}
+
+.verse-line {
+    margin: 8px 0;
+    padding-left: 20px;
+}
+
 @media print {
     body { background: white; padding: 0; }
     .container { box-shadow: none; padding: 30px; }
