@@ -376,7 +376,6 @@ body {
 /* Toggle buttons (Show All / Hide All) */
 .toggle-btn {
     position: fixed;
-    bottom: 30px;
     padding: 15px 30px;
     color: white;
     border: none;
@@ -395,6 +394,7 @@ body {
 
 .hide-all-btn {
     left: 30px;
+    bottom: 30px;
     background: #e74c3c;
 }
 
@@ -404,11 +404,22 @@ body {
 
 .show-all-btn {
     right: 30px;
+    bottom: 30px;
     background: #667eea;
 }
 
 .show-all-btn:hover {
     background: #764ba2;
+}
+
+.btn-shuffle {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, #00b894 0%, #00a381 100%);
+    color: white;
+    z-index: 1000;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25);
 }
 
 /* ========== 8. SECTION TITLE ========== */
