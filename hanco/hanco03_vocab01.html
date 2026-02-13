@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hán Cổ - Vocabulary Game</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style_hanco.css">
+    <link rel="stylesheet" href="../style_card.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <a href="./" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="header">
+            <img src="banner.img" alt="Hán Cổ Banner" class="banner-img"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="banner-img-fallback"></div>
+            <div class="banner-overlay">
+                <h1>漢古詞彙</h1>
+                <div class="title-row">
+                    <span class="title-en">Classical Chinese Vocabulary</span>
+                </div>
+                <p class="subtitle">Matching Hán tự — Hán Việt</p>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="hanco03_vocab01.html" class="nav-btn-collect">Bộ 1</a>
+            <a href="hanco03_vocab02.html" class="nav-btn-collect">Bộ 2</a>
+            <a href="hanco03_vocab03.html" class="nav-btn-collect">Bộ 3</a>
+            <a href="hanco03_vocab04.html" class="nav-btn-collect">Bộ 4</a>
+            <a href="hanco03_vocab05.html" class="nav-btn-collect">Bộ 5</a>
+            <a href="hanco03_vocab06.html" class="nav-btn-collect">Bộ 6</a>
+            <a href="hanco03_vocab07.html" class="nav-btn-collect">Bộ 7</a>
+            <a href="hanco03_vocab08.html" class="nav-btn-collect">Bộ 8</a>
+        </div>
+
+        <div class="content">
+            <!-- ==================== START SCREEN ==================== -->
+            <div id="startScreen" class="start-screen">
+                <button class="btn-start" id="btnStart" onclick="initGame()">Lets go!</button>
+                <div class="error-msg" id="errorMsg"></div>
+            </div>
+
+            <!-- ==================== GAME SCREEN ==================== -->
+            <div id="gameScreen" style="display:none;">
+                <div class="top-bar">
+                    <div class="logo">漢古 <small>Vocabulary Match</small></div>
+                    <div class="stats">
+                        <div class="stat-item timer">
+                            <span class="stat-value" id="timerDisplay">5:00</span>
+                            Thời gian
+                        </div>
+                        <div class="stat-item score">
+                            <span class="stat-value" id="scoreDisplay">0</span>
+                            Điểm
+                        </div>
+                        <div class="stat-item combo">
+                            <span class="stat-value" id="progressDisplay">0/0</span>
+                            Tiến độ
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-container">
+                    <div class="card-grid" id="cardGrid"></div>
+                </div>
+            </div>
+
+            <!-- ==================== END OVERLAY (injected by JS) ==================== -->
+
+            <script>
+                // ==================== CONFIG ====================
+                const PAIRS_ON_SCREEN = 10; // 10 cặp = 20 thẻ = lưới 5×4
+                const GAME_DURATION = 5 * 60; // 5 minutes in seconds
+                const POINTS_BASE = 10;
+
+                // ==================== STATE ====================
+                let allPairs = [];        // [{han, hanviet, id}, ...]
+                let queue = [];           // remaining pairs not yet on screen
+                let activeCards = [];     // cards currently on screen
+                let selectedCard = null;  // currently selected card element
+                let score = 0;
+                let matchedCount = 0;
+                let totalPairs = 0;
+                let timeLeft = GAME_DURATION;
+                let timerInterval = null;
+                let gameOver = false;
+
+                // ==================== FETCH DATA ====================
+                async function fetchVocabulary() {
+                    const SPREADSHEET_ID = "1eO-Wwh0RG9qgSBFJZx6CB_6Vl44PAlApk-DB6VFzthw";
+                    const API_KEY = "AIzaSyATK07C-sbdWh3dt9KvsAKRv2jut0CAgCY";
+                    const SHEET_NAME = "GK3001";
+
+
+                    const range = `${SHEET_NAME}!B1:C`;
+                    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${range}?key=${API_KEY}`;
+                
+                    const resp = await fetch(url);
+                    if (!resp.ok) {
+                        const errData = await resp.json().catch(() => null);
+                        const msg = errData?.error?.message || resp.statusText;
+                        throw new Error(`Lỗi API: ${msg}`);
+                    }
+
+                    const data = await resp.json();
+                    const rows = data.values || [];
+
+                    const pairs = [];
+                    rows.forEach((row, i) => {
+                        const han = (row[0] || '').trim();
+                        const hanviet = (row[1] || '').trim();
+                        if (han && hanviet) {
+                            pairs.push({ han, hanviet, id: i });
+                        }
+                    });
+
+                    if (pairs.length < 2) {
+                        throw new Error('Dữ liệu không đủ. Cần ít nhất 2 cặp từ (cột B: Hán, cột C: Hán Việt).');
+                    }
+
+                    return pairs;
+                }
+
+                // ==================== INIT GAME ====================
+                async function initGame() {
+                    const btn = document.getElementById('btnStart');
+                    const errEl = document.getElementById('errorMsg');
+                    errEl.textContent = '';
+                    btn.disabled = true;
+                    btn.innerHTML = '<span class="loading-spinner" style="display:inline-block;vertical-align:middle;width:20px;height:20px;border-width:2px;margin:0 8px 0 0;"></span>Đang tải...';
+
+                    try {
+                        const pairs = await fetchVocabulary();
+                        allPairs = pairs;
+                        totalPairs = pairs.length;
+
+                        // Shuffle all pairs
+                        shuffleArray(allPairs);
+
+                        // Split into initial screen set and queue
+                        const initialCount = Math.min(PAIRS_ON_SCREEN, allPairs.length);
+                        const initialPairs = allPairs.slice(0, initialCount);
+                        queue = allPairs.slice(initialCount);
+
+                        // Reset state
+                        score = 0;
+                        matchedCount = 0;
+                        timeLeft = GAME_DURATION;
+                        gameOver = false;
+                        selectedCard = null;
+
+                        // Switch screens
+                        document.getElementById('startScreen').style.display = 'none';
+                        document.getElementById('gameScreen').style.display = 'block';
+
+                        // Render
+                        updateStats();
+                        renderCards(initialPairs);
+
+                        // Start timer
+                        startTimer();
+
+                    } catch (e) {
+                        errEl.textContent = e.message;
+                        btn.disabled = false;
+                        btn.textContent = 'Bắt Đầu Học';
+                    }
+                }
+
+                // ==================== RENDER CARDS ====================
+                function renderCards(pairs) {
+                    const grid = document.getElementById('cardGrid');
+                    grid.innerHTML = '';
+                    activeCards = [];
+
+                    // Build flat list of card objects with pastel color index
+                    const cards = [];
+                    pairs.forEach((p, idx) => {
+                        const colorIdx = idx % 10;
+                        cards.push({ type: 'han', text: p.han, pairId: p.id, color: colorIdx });
+                        cards.push({ type: 'hanviet', text: p.hanviet, pairId: p.id, color: colorIdx });
+                    });
+
+                    // Shuffle cards
+                    shuffleArray(cards);
+
+                    // Create DOM
+                    cards.forEach((c, idx) => {
+                        const el = document.createElement('div');
+                        el.className = `card card-${c.type} card-color card-enter`;
+                        el.dataset.type = c.type;
+                        el.dataset.pairId = c.pairId;
+                        el.dataset.color = c.color;
+                        el.textContent = c.text;
+                        el.style.animationDelay = `${idx * 0.03}s`;
+                        el.addEventListener('click', () => onCardClick(el));
+                        grid.appendChild(el);
+                        activeCards.push(el);
+                    });
+                }
+
+                // ==================== CARD CLICK ====================
+                function onCardClick(el) {
+                    if (gameOver) return;
+                    if (el.classList.contains('matched')) return;
+
+                    // Deselect if clicking same card
+                    if (selectedCard === el) {
+                        el.classList.remove('selected');
+                        selectedCard = null;
+                        return;
+                    }
+
+                    // First selection
+                    if (!selectedCard) {
+                        selectedCard = el;
+                        el.classList.add('selected');
+                        return;
+                    }
+
+                    // Second selection — check match
+                    const first = selectedCard;
+                    const second = el;
+
+                    // Must be different types
+                    if (first.dataset.type === second.dataset.type) {
+                        // Same type: swap selection
+                        first.classList.remove('selected');
+                        selectedCard = second;
+                        second.classList.add('selected');
+                        return;
+                    }
+
+                    // Check pair match
+                    if (first.dataset.pairId === second.dataset.pairId) {
+                        // MATCH!
+                        first.classList.remove('selected');
+                        first.classList.add('matched');
+                        second.classList.add('matched');
+                        selectedCard = null;
+
+                        score += POINTS_BASE / totalPairs;
+                        matchedCount++;
+                        updateStats();
+
+                        // After animation, remove and refill
+                        setTimeout(() => {
+                            first.remove();
+                            second.remove();
+                            activeCards = activeCards.filter(c => c !== first && c !== second);
+
+                            // Refill from queue
+                            if (queue.length > 0) {
+                                const newPair = queue.shift();
+                                addNewPairToGrid(newPair);
+                            }
+
+                            // Check win
+                            if (matchedCount >= totalPairs) {
+                                endGame(true);
+                            }
+                        }, 520);
+
+                    } else {
+                        // WRONG
+                        first.classList.remove('selected');
+                        first.classList.add('wrong');
+                        second.classList.add('wrong');
+                        selectedCard = null;
+
+                        setTimeout(() => {
+                            first.classList.remove('wrong');
+                            second.classList.remove('wrong');
+                        }, 520);
+                    }
+                }
+
+                // ==================== ADD NEW PAIR ====================
+                let pairColorCounter = 0;
+                function addNewPairToGrid(pair) {
+                    const grid = document.getElementById('cardGrid');
+                    const colorIdx = pairColorCounter % 10;
+                    pairColorCounter++;
+                    const newCards = [
+                        { type: 'han', text: pair.han, pairId: pair.id, color: colorIdx },
+                        { type: 'hanviet', text: pair.hanviet, pairId: pair.id, color: colorIdx }
+                    ];
+
+                    newCards.forEach(c => {
+                        const el = document.createElement('div');
+                        el.className = `card card-${c.type} card-color card-enter`;
+                        el.dataset.type = c.type;
+                        el.dataset.pairId = c.pairId;
+                        el.dataset.color = c.color;
+                        el.textContent = c.text;
+                        el.addEventListener('click', () => onCardClick(el));
+
+                        // Insert at random position
+                        const children = grid.children;
+                        if (children.length > 0) {
+                            const pos = Math.floor(Math.random() * children.length);
+                            grid.insertBefore(el, children[pos]);
+                        } else {
+                            grid.appendChild(el);
+                        }
+                        activeCards.push(el);
+                    });
+                }
+
+                // ==================== TIMER ====================
+                function startTimer() {
+                    updateTimerDisplay();
+                    timerInterval = setInterval(() => {
+                        timeLeft--;
+                        updateTimerDisplay();
+                        if (timeLeft <= 0) {
+                            endGame(false);
+                        }
+                    }, 1000);
+                }
+
+                function updateTimerDisplay() {
+                    const m = Math.floor(timeLeft / 60);
+                    const s = timeLeft % 60;
+                    document.getElementById('timerDisplay').textContent =
+                        `${m}:${s.toString().padStart(2, '0')}`;
+
+                    // Urgency color
+                    if (timeLeft <= 30) {
+                        document.getElementById('timerDisplay').style.color = '#ff6b6b';
+                    } else if (timeLeft <= 60) {
+                        document.getElementById('timerDisplay').style.color = '#ffa502';
+                    }
+                }
+
+                function updateStats() {
+                    document.getElementById('scoreDisplay').textContent = score.toFixed(1);
+                    document.getElementById('progressDisplay').textContent = `${matchedCount}/${totalPairs}`;
+                }
+
+                // ==================== END GAME ====================
+                function endGame(isWin) {
+                    if (gameOver) return;
+                    gameOver = true;
+                    clearInterval(timerInterval);
+
+                    const timeUsed = GAME_DURATION - timeLeft;
+                    const minutes = Math.floor(timeUsed / 60);
+                    const seconds = timeUsed % 60;
+
+                    // Show effects FIRST, then overlay after a short delay
+                    if (isWin) {
+                        showFireworks();
+                        setTimeout(() => {
+                            showEndScreen(
+                                '#55efc4',
+                                '🎉 恭喜 🎉',
+                                'Try one more time, you’re gonna be amazed!',
+                                `Điểm: <span>${score.toFixed(1)}</span> · Thời gian: <span>${minutes}:${seconds.toString().padStart(2,'0')}</span> · Cặp: <span>${matchedCount}/${totalPairs}</span>`
+                            );
+                        }, 600);
+                    } else {
+                        showRain();
+                        setTimeout(() => {
+                            showEndScreen(
+                                '#fd79a8',
+                                '⏰ Times up',
+                                'Give it one more shot, you will be pleasantly surprised!',
+                                `Điểm: <span>${score.toFixed(1)}</span> · Đã ghép: <span>${matchedCount}/${totalPairs}</span>`
+                            );
+                        }, 600);
+                        
+                    }
+                }
+
+                function showEndScreen(color, title, msg, stats) {
+                    const overlay = document.createElement('div');
+                    overlay.className = 'end-overlay';
+                    overlay.id = 'endOverlay';
+                    overlay.innerHTML = `
+                        <div class="end-box">
+                            <h2 style="color:${color}">${title}</h2>
+                            <p class="end-msg" style="color:rgba(255,255,255,0.85)">${msg}</p>
+                            <p class="end-stats">${stats}</p>
+                            <button class="btn-replay" onclick="restartGame()">Try Again</button>
+                        </div>
+                    `;
+                    document.body.appendChild(overlay);
+                }
+
+                function restartGame() {
+                    // Cleanup
+                    clearInterval(timerInterval);
+                    const overlay = document.getElementById('endOverlay');
+                    if (overlay) overlay.remove();
+
+                    const fireworksCanvas = document.getElementById('fireworksCanvas');
+                    if (fireworksCanvas) { cancelAnimationFrame(fireworksCanvas._raf); fireworksCanvas.remove(); }
+
+                    const rainContainer = document.getElementById('rainContainer');
+                    if (rainContainer) rainContainer.remove();
+
+                    document.getElementById('gameScreen').style.display = 'none';
+                    document.getElementById('startScreen').style.display = 'flex';
+
+                    const btn = document.getElementById('btnStart');
+                    btn.disabled = false;
+                    btn.textContent = 'Start';
+
+                    // Reset timer display color
+                    document.getElementById('timerDisplay').style.color = '#fd79a8';
+                }
+
+                // ==================== FIREWORKS ====================
+                function showFireworks() {
+                    const canvas = document.createElement('canvas');
+                    canvas.id = 'fireworksCanvas';
+                    canvas.className = 'fireworks-canvas';
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                    document.body.appendChild(canvas);
+
+                    const ctx = canvas.getContext('2d');
+                    const particles = [];
+                    const colors = ['#ff6b6b','#ffeaa7','#55efc4','#a29bfe','#fd79a8','#fdcb6e','#74b9ff','#ff7675'];
+
+                    function createBurst(x, y) {
+                        const count = 60 + Math.floor(Math.random() * 40);
+                        for (let i = 0; i < count; i++) {
+                            const angle = (Math.PI * 2 / count) * i + (Math.random() - 0.5) * 0.4;
+                            const speed = 2 + Math.random() * 5;
+                            particles.push({
+                                x, y,
+                                vx: Math.cos(angle) * speed,
+                                vy: Math.sin(angle) * speed,
+                                life: 1,
+                                decay: 0.008 + Math.random() * 0.012,
+                                color: colors[Math.floor(Math.random() * colors.length)],
+                                size: 2 + Math.random() * 3
+                            });
+                        }
+                    }
+
+                    // Launch bursts periodically
+                    let burstCount = 0;
+                    const maxBursts = 20;
+                    const burstTimer = setInterval(() => {
+                        if (burstCount >= maxBursts) { clearInterval(burstTimer); return; }
+                        createBurst(
+                            100 + Math.random() * (canvas.width - 200),
+                            80 + Math.random() * (canvas.height * 0.5)
+                        );
+                        burstCount++;
+                    }, 300);
+
+                    function animate() {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                        for (let i = particles.length - 1; i >= 0; i--) {
+                            const p = particles[i];
+                            p.x += p.vx;
+                            p.y += p.vy;
+                            p.vy += 0.04; // gravity
+                            p.vx *= 0.99;
+                            p.life -= p.decay;
+
+                            if (p.life <= 0) { particles.splice(i, 1); continue; }
+
+                            ctx.beginPath();
+                            ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+                            ctx.fillStyle = p.color;
+                            ctx.globalAlpha = p.life;
+                            ctx.fill();
+                            ctx.globalAlpha = 1;
+                        }
+
+                        canvas._raf = requestAnimationFrame(animate);
+                    }
+                    animate();
+                }
+
+                // ==================== RAIN ====================
+                function showRain() {
+                    const container = document.createElement('div');
+                    container.className = 'rain-container';
+                    container.id = 'rainContainer';
+
+                    const dropCount = 120;
+                    for (let i = 0; i < dropCount; i++) {
+                        const drop = document.createElement('div');
+                        drop.className = 'raindrop';
+                        drop.style.left = Math.random() * 100 + '%';
+                        drop.style.height = (15 + Math.random() * 25) + 'px';
+                        drop.style.animationDuration = (0.6 + Math.random() * 0.6) + 's';
+                        drop.style.animationDelay = (Math.random() * 2) + 's';
+                        drop.style.opacity = 0.3 + Math.random() * 0.5;
+                        container.appendChild(drop);
+                    }
+
+                    document.body.appendChild(container);
+                }
+
+                // ==================== UTILS ====================
+                function shuffleArray(arr) {
+                    for (let i = arr.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [arr[i], arr[j]] = [arr[j], arr[i]];
+                    }
+                    return arr;
+                }
+            </script>
+        </div> 
+    </div>
+
+</body>
+</html>
