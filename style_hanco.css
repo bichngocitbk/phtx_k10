@@ -1,0 +1,160 @@
+/* ================================================================
+   STYLE_HANCO.CSS — Hán Cổ (Classical Chinese) Styles
+   Priority: loads AFTER style.css & style_card.css
+   ================================================================ */
+
+/* ========== 1. FONT STYLES — Hán & Hán Việt ========== */
+
+/* Chữ Hán — font mềm mại, thư pháp */
+.han {
+    font-family: 'KaiTi', 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+    color: #1a1a2e;
+    font-size: 1.25em;
+    font-weight: 400;
+    letter-spacing: 2px;
+}
+
+/* Chữ Hán lớn — dùng cho tiêu đề, câu chính */
+.han-large {
+    font-family: 'Ma Shan Zheng', 'ZCOOL XiaoWei', 'KaiTi', cursive;
+    color: #1a1a2e;
+    font-size: 1.5em;
+    letter-spacing: 3px;
+}
+
+/* Chữ Hán Việt */
+.hanviet {
+    color: #8B4513;
+    font-weight: 600;
+    font-style: italic;
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+}
+
+/* ========== 2. GRAMMAR PATTERN — Hán overrides ========== */
+.grammar-pattern .han {
+    font-size: 1.3em;
+    color: #c0392b;
+}
+
+.grammar-pattern .hanviet {
+    font-size: 1em;
+}
+
+/* ========== 3. POS TAGS — Phân loại từ ========== */
+.pos-tag {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 4px;
+    font-size: 0.7em;
+    font-weight: 700;
+    font-style: normal;
+    vertical-align: middle;
+    margin-left: 3px;
+    letter-spacing: 0;
+    font-family: 'Palatino Linotype', serif;
+}
+
+.pos-pt  { background: #ffeaa7; color: #d35400; }    /* Phó từ */
+.pos-tdt { background: #dfe6e9; color: #2d3436; }    /* Trợ động từ */
+.pos-trt { background: #a29bfe; color: white; }       /* Trợ từ */
+.pos-dt  { background: #81ecec; color: #00695c; }     /* Đại từ */
+.pos-pvt { background: #fab1a0; color: #c0392b; }     /* Phương vị từ */
+.pos-tkc { background: #fd79a8; color: white; }       /* Trợ từ kết cấu */
+.pos-lt  { background: #55efc4; color: #00695c; }     /* Liên từ */
+.pos-gt  { background: #74b9ff; color: #0056b3; }     /* Giới từ */
+.pos-st  { background: #ffeaa7; color: #856404; }     /* Số từ */
+.pos-lgt { background: #b2bec3; color: #2d3436; }     /* Lượng từ */
+.pos-dgt { background: #fdcb6e; color: #7d4e00; }     /* Đẳng giới từ */
+.pos-tt  { background: #e17055; color: white; }        /* Tính từ */
+
+/* ========== 4. HAN EXAMPLE — Câu ví dụ Hán văn ========== */
+.han-example {
+    margin: 12px 0 12px 15px;
+    padding: 15px 20px;
+    border-left: 4px solid #c0392b;
+    background: linear-gradient(135deg, #fdf6f0 0%, #fef9f4 100%);
+    border-radius: 0 8px 8px 0;
+}
+
+.han-example .han {
+    display: block;
+    margin-bottom: 5px;
+    line-height: 1.8;
+}
+
+.han-example .hanviet {
+    display: block;
+    margin-bottom: 5px;
+    line-height: 1.6;
+}
+
+.han-example .vi-static {
+    display: block;
+    line-height: 1.6;
+}
+
+.han-example .split-row {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+/* ========== 5. ANALYSIS BOX — Bảng phân tích từ loại ========== */
+.analysis-box {
+    margin: 20px 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #f5f6fa 0%, #ecf0f1 100%);
+    border: 2px solid #b2bec3;
+    border-radius: 8px;
+}
+
+.analysis-title {
+    color: #2c3e50;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 12px;
+}
+
+.analysis-box .han {
+    font-size: 1.35em;
+    line-height: 2.5;
+    letter-spacing: 1px;
+}
+
+/* ========== 6. COLLAPSIBLE SECTIONS ========== */
+.section-title {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.2s;
+}
+
+.section-title:hover {
+    background: #eef0fb;
+}
+
+.section-title .toggle-icon {
+    font-size: 0.7em;
+    transition: transform 0.3s ease;
+    margin-left: 12px;
+    flex-shrink: 0;
+}
+
+.section-title.collapsed .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+.section-body {
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+    opacity: 1;
+}
+
+.section-body.collapsed {
+    max-height: 0 !important;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+}
