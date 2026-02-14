@@ -1,0 +1,51 @@
+const SPREADSHEET_ID = "1eO-Wwh0RG9qgSBFJZx6CB_6Vl44PAlApk-DB6VFzthw";
+const API_KEY = atob("WUNnQUMwdHVqMnZSS0Fzdks5dGQzaFdkYnMtQzcwS1RBeVNheklB").split("").reverse().join("");
+const SHEET_NAME = "GK3001";
+
+const key = "AIzaSyATK07C-sbdWh3dt9KvsAKRv2jut0CAgCY";
+const encoded = btoa(key.split("").reverse().join(""));
+console.log(encoded);
+const key = atob("WUNnQUMwdHVqMnZSS0Fzdks5dGQzaFdkYnMtQzcwS1RBeVNheklB").split("").reverse().join("");
+
+
+style.css (14 sections):
+Reset & Base → 2. Layout → 3. Header/Banner → 4. Navigation → 5. Split-view → 6. Inline text styles → 7. Interactive (click-to-reveal) → 8. Section title → 9. Content boxes (Verse, Note, Stage, Jhāna) → 10. Grammar → 11. Q&A → 12. Table → 13. Responsive → 14. Print
+
+style_card.css (13 sections):
+Variables → 2. Reset & Base → 3. Layout → 4. Stats panel → 5. Progress bar → 6. Card grid → 7. Cards (base + states + font variants) → 8. Start screen → 9. End screen → 10. Effects → 11. Loading → 12. Animations (gộp tất cả @keyframes) → 13. Responsive (gộp tất cả breakpoints)
+
+style_hanco.css (6 sections):
+Font styles (Hán, Hán lớn, Hán Việt) → 2. Grammar pattern overrides → 3. POS tags → 4. Han example → 5. Analysis box → 6. Collapsible sections
+
+const SPREADSHEET_ID = "XXX";
+const API_KEY = "XXX";
+const SHEET_NAME = "XXX";
+const range = `${SHEET_NAME}!B1:C`;
+const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${range}?key=${API_KEY}`;
+
+
+----
+website để lấy icon: https://lucide.dev/icons/
+Mua ngay / Buy Now / Thêm vào giỏ → shopping-cart hoặc cart (thêm + plus)
+→ shopping-bag (túi shopping)
+→ plus-circle hoặc plus (kết hợp text "Thêm")
+Thanh toán / Checkout / Mua hàng → credit-card hoặc wallet
+→ arrow-right (→) hoặc arrow-right-to-line
+→ banknote hoặc dollar-sign
+Tìm kiếm / Search → search (kính lúp)
+→ search variant có viền tròn nếu muốn button nổi bật
+Đăng nhập / Login → log-in hoặc arrow-right-from-line
+→ user + log-in
+Đăng ký / Sign Up → user-plus hoặc user-round-plus
+Giỏ hàng / Cart → shopping-cart (đầy đủ nhất)
+→ shopping-basket
+Yêu thích / Wishlist / Favorite → heart (đầy) hoặc heart outline
+→ star (nếu kiểu rating)
+Menu / Hamburger → menu hoặc align-justify
+Close / Xóa → x hoặc x-circle
+Arrow quay lại / Back → arrow-left
+Filter / Lọc → sliders hoặc filter
+Sort / Sắp xếp → arrow-up-down hoặc sort-desc
+Thông báo / Notification → bell
+Profile / Tài khoản → user hoặc user-circle
+Chia sẻ / Share → share-2 hoặc share
