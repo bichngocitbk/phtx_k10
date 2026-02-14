@@ -199,6 +199,12 @@ body {
 }
 .nav-btn-collect:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
 
+.nav-btn-collected {
+    background: linear-gradient(135deg, #103954 0%, #103954 100%);
+    color: #fdcb6e;
+}
+.nav-btn-collected:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
+
 .nav-btn-words {
     background: #2C3E50;
     color: white;
