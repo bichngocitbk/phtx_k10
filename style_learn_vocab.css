@@ -161,16 +161,29 @@
         .vocab-row.mastered .cell-han {
             color: #999;
             text-decoration: line-through;
-            text-decoration-color: #ccc;
+            text-decoration-color: #473636;
         }
 
         /* ========== CELLS ========== */
-        .cell-han, .cell-hv {
+        .cell-vie, .cell-eng, .cell-han, .cell-hv {
             padding: 8px 12px;
             display: flex;
             align-items: center;
         }
 
+        .cell-eng {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            color: #1a1a2e;
+            font-size: 0.89em;
+            font-weight: 400;
+            letter-spacing: 2px;
+            border-right: 1px solid #f0f0f0;
+            justify-content: left;
+            text-align: left;
+            line-height: 1.6;
+        }
+
+        /* ----------Cell Hán Tự ----------*/
         .cell-han {
             font-family: 'KaiTi', 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
             color: #1a1a2e;
@@ -183,12 +196,13 @@
             line-height: 1.6;
         }
 
+        /* ----------Cell Hán Việt ----------*/
         .cell-hv {
             font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
             color: #8B4513;
             font-weight: 600;
             font-style: italic;
-            font-size: 1.35em;
+            font-size: 1.0em;
             cursor: pointer;
             user-select: none;
             transition: all 0.3s ease;
@@ -227,6 +241,50 @@
             color: #8B4513;
             background: rgba(255, 243, 205, 0.4);
         }
+
+        /* ----------Cell Tiếng Việt ----------*/
+        .cell-vie {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            color: #1a1a2e;
+            font-size: 0.89em;
+            font-weight: 400;
+            letter-spacing: 2px;
+            border-right: 1px solid #f0f0f0;
+            justify-content: left;
+            text-align: left;
+            line-height: 1.6;
+        }
+
+        /* Hidden state Tiếng Việt text masked */
+        .cell-vie.hidden {
+            color: transparent;
+            background: repeating-linear-gradient(
+                90deg,
+                #ddd 0px, #ddd 8px,
+                #e8e8e8 8px, #e8e8e8 12px
+            );
+            background-size: 100% 60%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .cell-vie.hidden:hover {
+            background: repeating-linear-gradient(
+                90deg,
+                #c5b8f0 0px, #c5b8f0 8px,
+                #d6ccf5 8px, #d6ccf5 12px
+            );
+            background-size: 100% 60%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        /* Revealed state */
+        .cell-vie.revealed {
+            color: #8B4513;
+            background: rgba(255, 243, 205, 0.4);
+        }
+
 
         /* ========== ROW INDEX ========== */
         .row-idx {
@@ -295,4 +353,6 @@
             .header h1 { font-size: 1.6em; }
             .cell-han { font-size: 1.05em; }
             .cell-hv { font-size: 0.85em; }
+            .cell-eng { font-size: 0.85em; }
+            .cell-vie { font-size: 0.85em; }
         }
