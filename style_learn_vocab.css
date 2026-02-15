@@ -159,8 +159,8 @@
             font-weight: 400;
             letter-spacing: 2px;
             border-right: 1px solid #f0f0f0;
-            justify-content: center;
-            text-align: center;
+            justify-content: left;
+            text-align: left;
             line-height: 1.6;
         }
 
@@ -174,8 +174,8 @@
             cursor: pointer;
             user-select: none;
             transition: all 0.3s ease;
-            justify-content: center;
-            text-align: center;
+            justify-content: left;
+            text-align: left;
             position: relative;
             line-height: 1.5;
         }
