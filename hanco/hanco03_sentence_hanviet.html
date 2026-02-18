@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hán Cổ 03 — Dịch Hán => Việt</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style_hanco.css">
+    <link rel="stylesheet" href="../style_learn_sentence.css">
+</head>
+<body>
+
+<!-- Home Button -->
+<a href="../" class="home-btn"><img src="../icons/home.svg" alt="Home" width="20" height="20"><span class="btn-text"> Home</span></a>
+
+<!-- Hide/Show All Button -->
+<button class="toggle-btn hide-all-btn" onclick="hideAll()"><img src="../icons/eye-closed.svg" alt="Hide All" width="20" height="20"><span class="btn-text"> Hide All</span></button>
+<button class="toggle-btn show-all-btn" onclick="revealAll()"><img src="../icons/eye.svg" alt="Show All" width="20" height="20"><span class="btn-text"> Show All</span></button>
+
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="banner-img-fallback" style="display:block"></div>
+        <div class="banner-overlay">
+            <h1 style="font-family:'SimSun',serif; font-size:5.2em; letter-spacing:4px;">漢古練習</h1>
+        </div>
+        <div class="subtitle">Phiên âm Hán Việt và dịch nghĩa</div>
+    </div>
+
+    <!-- NAV -->
+    <div class="nav-buttons">
+        <a href="hanco03_sentence_wbw.html" class="nav-btn-collect">Word by word</a>
+        <a href="hanco03_sentence_hanviet.html" class="nav-btn-collected">Translating Hán Việt</a>
+        <a href="hanco03_sentence_viethan.html" class="nav-btn-collect">Translating Việt Hán</a>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content" id="sentenceList">
+        <!-- JS sẽ render -->
+    </div>
+
+</div>
+
+<script>
+// ============ DATA — 16 câu ============
+const sentences = [
+{
+    id: 1,
+	question: "身體之外面有皮毛，皮下有肌肉，肉中有筋骨。",
+	anwser: ["Thân","thể","chi","ngoại","diện","hữu","bì","mao",",","bì","hạ","hữu","cơ","nhục",",","nhục","trung","hữu","cân","cốt."],
+	meaning: "Mặt ngoài của thân thể có da, lông; dưới da có thịt, trong thịt có gân, xương."
+},
+{
+    id: 2,
+	question: "肉中有筋骨。脊為群骨之主。脊中有髓。",
+	anwser: ["Nhục","trung","hữu","cân","cốt.","Tích","vi","quần","cốt","chi","chủ.","Tích","trung","hữu","tủy"],
+	meaning: "Trong thịt có gân, xương. Xương sống là xương chính của tất cả các xương. Trong xương sống, có tủy."
+},
+{
+    id: 3,
+	question: "無骨人不能立。無筋人不能舉動。",
+	anwser: ["Vô","cốt","nhân","bất","năng","lập","。","Vô","cân","nhân","bất","năng","cử","động"],
+	meaning: "Không có xương, người ta không thể đứng được; Không có gân, người ta không thể cử động được."
+},
+{
+    id: 4,
+	question: "耳為聽官，目為視官，鼻為嗅官，舌為味官。",
+	anwser: ["Nhĩ","vi","thính","quan",",","mục","vi","thị","quan",",","tị","vi","khứu","quan",",","thiệt","vi","vị","quan:"],
+	meaning: "Tai là thính giác (cơ quan dùng để nghe), mắt là thị giác (cơ quan dùng để nhìn), mũi là khứu giác (cơ quan dùng để ngửi), lưỡi là vị giác (cơ quan dùng để nếm)."
+},
+{
+    id: 5,
+	question: "不能聽者為聾，不能視者為肓，不能言者為啞。",
+	anwser: ["Bất","năng","thính","giả","vi","lung",",","bất","năng","thị","giả","vi","manh",",","bất","năng","ngôn","giả","vi","á"],
+	meaning: "Người không nghe được là người điếc, người (kẻ) không thấy được là người mù, kẻ không nói được là (người) câm."
+},
+{
+    id: 6,
+	question: "若爲塵垢所阻，則汗泄不暢，故沐浴宜勤。",
+	anwser: ["Nhược","vi","trần","cấu","sở","trở",",","tắc","hãn","tiết","bất","sướng",",","cố","mộc","dục","nghi","cần"],
+	meaning: "Nếu bị bụi dơ ngăn trở thì mồ hôi tiết ra không thông suốt, cho nên việc tắm gội nên chăm."
+},
+{
+    id: 7,
+	question: "沐浴不特除垢，又能助血液之流通。",
+	anwser: ["Mộc","dục","bất","đặc","trừ","cấu",",","hựu","năng","trợ","huyết","dịch","chi","lưu","thông"],
+	meaning: "Tắm gội, chẳng những trừ được dơ, mà còn có thể giúp cho sự lưu thông của huyết dịch (máu)."
+},
+{
+    id: 8,
+	question: "體操能活血脈，強筋骨，又能助全體之發育。",
+	anwser: ["Thể","thao","năng","hoạt","huyết","mạch",",","cường","cân","cốt",",","hựu","năng","trợ","toàn","thể","chi","phát","dục"],
+	meaning: "Thể thao làm hoạt động các mạch máu, làm mạnh gân cốt, lại có thể giúp vào sự trưởng thành của toàn thân thể."
+},
+{
+    id: 9,
+	question: "米多少，用斗量。布長短，用尺量。",
+	anwser: ["Mể","đa","thiểu",",","dụng","đẩu","lượng","。","Bố","trường","đoản",",","dụng","xích","lượng"],
+	meaning: "Gạo nhiều ít, dùng đấu đong. Vải dài ngắn, dùng thước đo."
+},
+{
+    id: 10,
+	question: "米十升，為一斗。布十寸為一尺。",
+	anwser: ["Mễ","thập","thăng",",","vi","nhất","đẩu","。","Bố","thập","thốn",",","vi","nhất","xích","。"],
+	meaning: "Mười thưng gạo là một đấu. Mười tất vải là một thước."
+},
+{
+    id: 11,
+	question: "有老人，提竹籃，入市中，買魚一尾，步行還家。",
+	anwser: ["Hữu","lão","nhân",",","đề","trúc","lam",",","nhập","thị","trung",",","mãi","ngư","nhất","vĩ",",","bộ","hành","hoàn","gia","。"],
+	meaning: "Có một ông già xách cái giỏ tre, đi vào trong chợ. Mua một con cá, (rồi) đi bộ về nhà"
+},
+{
+    id: 12,
+	question: "楚人有涉江者。其劍自舟中墜於水。",
+	anwser: ["Sở","nhân","hữu","thiệp","giang","giả",",","Kỳ","kiếm","tự","chu","trung","trụy","ư","thủy","。"],
+	meaning: "Nước Sở có người đi qua sông. Cây gươm của anh ta từ trên thuyền rơi xuống nước."
+},
+{
+    id: 13,
+	question: "遽刻其舟曰：「是吾劍之所從墜」。",
+	anwser: ["Cự","khắc","kỳ","chu","viết",":","“","Thị","ngô","kiếm","chi","sở","tùng","trụy","”","。"],
+	meaning: "Anh ta vội khắc vào thuyền và nói: “Đây là nơi gươm của ta rơi xuống”."
+},
+{
+    id: 14,
+	question: "舟止，從其所刻者，入水求之。",
+	anwser: ["Chu","chỉ",",","tùng","kỳ","sở","khắc","giả",",","nhập","thủy","cầu","chi","。"],
+	meaning: "Thuyền dừng, anh ta mới theo chỗ mình đã khắc nhảy vào nước tìm gươm."
+},
+{
+    id: 15,
+	question: "舟已行矣，而劍不行，求劍若此，不亦惑乎？",
+	anwser: ["Chu","dĩ","hành","hĩ",",","nhi","kiếm","bất","hành",",","cầu","kiếm","nhược","thử",",","bất","diệc","hoặc","hồ","?"],
+	meaning: "Thuyền đã đi rồi, mà gươm không đi, tìm gươm như thế, chẳng cũng là lầm lẫn lắm ư?"
+},
+{
+    id: 16,
+	question: "梟逢鳩，鳩曰：「子將安之？」",
+	anwser: ["Kiêu","phùng","cưu",",","cưu","viết","：","“","Tử","tương","an","chi","?","”"],
+	meaning: "Chim cú gặp chim cưu, chim cưu hỏi: “Anh định đi đâu?”."
+},
+{
+    id: 17,
+	question: "梟曰：「我將東徙」。鳩曰：「何故？」。",
+	anwser: ["Kiêu","viết",":","“","Ngã","tương","đông","tỉ","”","。","Cưu","viết",":","“","Hà","cố","”","?","。"],
+	meaning: "Chim cú nói: “ Tôi định dời sang phía đông”. Chim cưu hỏi: “ Vì sao thế?”."
+},
+{
+    id: 18,
+	question: "梟曰：「鄉人皆惡我鳴，以故東徙」。",
+	anwser: ["Kiêu","viết",":","“","Hương","nhân","giai","ố","ngã","minh",",","dĩ","cố","đông","tỉ","”"],
+	meaning: "Chim cú nói: “Người trong làng đều ghét tiếng kêu của tôi, vì thế tôi dời sang phía đông”."
+},
+{
+    id: 19,
+	question: "鳩曰：「子能更鳴可矣；不能更鳴，東徙猶惡子之聲」。",
+	anwser: ["Cưu","viết",":","“","Tử","năng","canh","minh","khả","hĩ",";","bất","năng","canh","minh",",","đông","tỉ","do","ố","tử","chi","thanh","”"],
+	meaning: "Chim cưu nói: “Anh phải thay đổi được tiếng kêu mới nên; nếu không thay đổi được tiếng kêu thì dời sang đông người ta vẫn ghét tiếng kêu của anh”."
+	}
+];
+
+// Punctuation set
+const PUNCT = new Set(["，","。","、","；","：","！","?","「","」","（","）",",",",","“","”",";",":","'","\"","《","》"]);
+
+// ============ RENDER ============
+function renderAll() {
+    const container = document.getElementById('sentenceList');
+    let totalHanWords = 0;
+    let html = '';
+
+    sentences.forEach(s => {
+        // Count real Han words (not punctuation)
+        const hanWordsCount = s.anwser.filter(c => !PUNCT.has(c)).length;
+        totalHanWords += hanWordsCount;
+
+        html += `<div class="sentence-card" data-id="${s.id}">`;
+        html += `<div class="sentence-num">Câu ${s.id}</div>`;
+
+        // Row 1: Hán Việt (luôn hiển thị)
+        html += `<div class="question-row"><span class="question" style="font-family: 'KaiTi', 'Noto Serif SC', serif; font-size:1.6em;">${s.question}</span></div>`;
+
+        // Row 2: Chữ Hán (ẩn/hiện từng từ)
+        html += `<div class="anwser-row">`;
+        s.anwser.forEach((ch, idx) => {
+            if (PUNCT.has(ch)) {
+                html += `<span class="anwser-punct">${ch}</span>`;
+            } else {
+                html += `<span class="anwser-word hidden" style="font-family: 'Palatino Linotype', serif; font-size:1.0em; letter-spacing: 0px;"  data-sid="${s.id}" data-idx="${idx}" onclick="toggleHanWord(this)">${ch}</span>`;
+            }
+        });
+        html += `</div>`;
+
+        // Row 3: Nghĩa tiếng Việt (ẩn/hiện nguyên câu)
+        html += `<div class="row-meaning"><span class="meaning-text hidden" onclick="toggleMeaning(this)">${s.meaning}</span></div>`;
+
+        html += `</div>`;
+    });
+
+    container.innerHTML = html;
+    document.getElementById('countTotal').textContent = totalHanWords;
+}
+
+// ============ TOGGLE SINGLE HAN WORD ============
+function toggleHanWord(el) {
+    el.classList.toggle('hidden');
+    el.classList.toggle('revealed');
+}
+
+// ============ TOGGLE MEANING ============
+function toggleMeaning(el) {
+    el.classList.toggle('hidden');
+    el.classList.toggle('revealed');
+}
+
+// ============ SHOW ALL ============
+function revealAll() {
+    document.querySelectorAll('.anwser-word.hidden').forEach(el => {
+        el.classList.remove('hidden');
+        el.classList.add('revealed');
+    });
+    document.querySelectorAll('.meaning-text.hidden').forEach(el => {
+        el.classList.remove('hidden');
+        el.classList.add('revealed');
+    });
+}
+
+// ============ HIDE ALL ============
+function hideAll() {
+    document.querySelectorAll('.anwser-word.revealed').forEach(el => {
+        el.classList.remove('revealed');
+        el.classList.add('hidden');
+    });
+    document.querySelectorAll('.meaning-text.revealed').forEach(el => {
+        el.classList.remove('revealed');
+        el.classList.add('hidden');
+    });
+}
+// ============ INIT ============
+renderAll();
+</script>
+
+</body>
+</html>

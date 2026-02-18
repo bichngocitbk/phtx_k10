@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hán Cổ 03 — Dịch Việt => Hán</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style_hanco.css">
+    <link rel="stylesheet" href="../style_learn_sentence.css">
+</head>
+<body>
+
+<!-- Home Button -->
+<a href="../" class="home-btn"><img src="../icons/home.svg" alt="Home" width="20" height="20"><span class="btn-text"> Home</span></a>
+
+<!-- Hide/Show All Button -->
+<button class="toggle-btn hide-all-btn" onclick="hideAll()"><img src="../icons/eye-closed.svg" alt="Hide All" width="20" height="20"><span class="btn-text"> Hide All</span></button>
+<button class="toggle-btn show-all-btn" onclick="revealAll()"><img src="../icons/eye.svg" alt="Show All" width="20" height="20"><span class="btn-text"> Show All</span></button>
+
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="banner-img-fallback" style="display:block"></div>
+        <div class="banner-overlay">
+            <h1 style="font-family:'SimSun',serif; font-size:5.2em; letter-spacing:4px;">漢古練習</h1>
+        </div>
+        <div class="subtitle">Từ âm Hán Việt viết chữ Hán và dịch nghĩa</div>
+    </div>
+
+    <!-- NAV -->
+    <div class="nav-buttons">
+        <a href="hanco03_sentence_wbw.html" class="nav-btn-collect">Word by word</a>
+        <a href="hanco03_sentence_hanviet.html" class="nav-btn-collect">Translating Hán Việt</a>
+        <a href="hanco03_sentence_viethan.html" class="nav-btn-collected">Translating Việt Hán</a>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content" id="sentenceList">
+        <!-- JS sẽ render -->
+    </div>
+
+</div>
+
+<script>
+// ============ DATA — 16 câu ============
+const sentences = [
+    {
+        id: 1,
+        question: "Bì phu hữu khổng, sở dĩ bài tiết hãn dịch dã.",
+        anwser: ["皮","膚","有","孔",",","所","以","排","泄","汗","液","也","。"],
+        meaning: "Da có lỗ, nên bài tiết được mồ hôi."
+    },
+    {
+        id: 2,
+        question: "Nhân chi thân thể, dĩ vận động nhi nhật kiện.",
+        anwser: ["人","之","身","體",",","以","運","動","而","日","健","。"],
+        meaning: "Thân thể con người nhờ vận động mà ngày càng mạnh khỏe."
+    },
+    {
+        id: 3,
+        question: "Vận động chi hữu ích giả, mạc như thể thao.",
+        anwser: ["運","動","之","有","益","者",",","莫","如","體","操","。"],
+        meaning: "Vận động có ích, không bằng gì thể thao."
+    },
+    {
+        id: 4,
+        question: "Tăng giả, Tăng già chi tỉnh xưng, ý vi hòa hợp chúng.",
+        anwser: ["僧","者",",","僧","伽","之","省","稱",",","意","為","和","合","眾","。"],
+        meaning: "\"Tăng\" là tiếng gọi tắt của \"Tăng già\", nghĩa là hòa hợp chúng."
+    },
+    {
+        id: 5,
+        question: "Nhất, Giới hòa đồng tu; nhị, Kiến hòa đồng giải.",
+        anwser: ["一",",","戒","和","同","修",";","二",",","見","和","同","解","。"],
+        meaning: "1. Giới hòa hợp cùng tu; 2. Thấy biết hòa hợp để cùng hiểu."
+    },
+    {
+        id: 6,
+        question: "Tam, Thân hòa đồng trụ; Tứ, Lợi hòa đồng quân.",
+        anwser: ["三",",","身","和","同","住",";","四",",","利","和","同","均","。"],
+        meaning: "3. Thân hòa hợp sống chung với nhau. 4. Lợi ích hòa hợp phân chia đồng đều."
+    },
+    {
+        id: 7,
+        question: "Ngũ, Khẩu hòa vô tranh; Lục, Ý hòa đồng duyệt.",
+        anwser: ["五",",","口","和","無","諍",";","六",",","意","和","同","悅","。"],
+        meaning: "5. Miệng hòa hợp không tranh cãi nhau; 6. Ý hòa hợp cùng vui."
+    },
+    {
+        id: 8,
+        question: "Cố thử Tăng tự, thực Phật đệ tử đoàn thể chi danh dã.",
+        anwser: ["故","此","僧","字",",","實","佛","弟","子","團","體","之","名","也","。"],
+        meaning: "Cho nên chữ Tăng này, thật là tên gọi của đoàn thể đệ tử Phật."
+    },
+    {
+        id: 9,
+        question: "Thích Ca thị Phật chi tính, Mâu Ni thị Phật chi danh.",
+        anwser: ["釋","迦","是","佛","之","姓",",","牟","尼","是","佛","之","名","。"],
+        meaning: "Thích Ca là họ của Phật, Mâu Ni là tên của Phật."
+    },
+    {
+        id: 10,
+        question: "Ngã quốc dịch vi 'Năng nhân tịch mặc.'",
+        anwser: ["我","國","譯","為","「","能","仁","寂","默","」","。"],
+        meaning: "Nước ta (Trung Quốc) dịch là \"Năng nhân tịch mặc\"."
+    },
+    {
+        id: 11,
+        question: "Năng tức năng lực, nhân tức từ bi.",
+        anwser: ["能","即","能","力",",","仁","即","慈","悲","。"],
+        meaning: "Năng nghĩa là năng lực, nhân nghĩa là từ bi."
+    },
+    {
+        id: 12,
+        question: "Tịch giả, bất vi khổ lạc sở động.",
+        anwser: ["寂","者",",","不","為","苦","樂","所","動","。"],
+        meaning: "Tịch là không bị những điều khổ vui làm dao động."
+    },
+    {
+        id: 13,
+        question: "Mặc giả, bất vi phiền não sở nhiễu.",
+        anwser: ["默","者",",","不","為","煩","惱","所","擾","。"],
+        meaning: "Mặc là không bị phiền não làm rối loạn."
+    },
+    {
+        id: 14,
+        question: "Công đức viên mãn, cố hiệu Thích Ca Mâu Ni.",
+        anwser: ["功","德","圓","滿",",","故","號","釋","迦","牟","尼","。"],
+        meaning: "Công đức tròn đủ, cho nên hiệu là Thích Ca Mâu Ni."
+    },
+    {
+        id: 15,
+        question: "Kim ngã bối ký thị Phật chi đệ tử.",
+        anwser: ["今","我","輩","既","是","佛","之","弟","子","。"],
+        meaning: "Ngày nay, chúng ta đã là đệ tử của Ngài."
+    },
+    {
+        id: 16,
+        question: "Phật chi đệ tử ưng học Phật chi Năng nhân tịch mặc.",
+        anwser: ["佛","之","弟","子","，","應","學","佛","之","能","仁","寂","默","。"],
+        meaning: "Đệ tử của Ngài phải học theo cái đức tánh \"Năng nhân tịch mặc\" của Ngài."
+    }
+];
+
+// Punctuation set
+const PUNCT = new Set(["，","。","、","；","：","！","？","「","」","（","）",",",";","'","'","《","》"]);
+
+// ============ RENDER ============
+function renderAll() {
+    const container = document.getElementById('sentenceList');
+    let totalHanWords = 0;
+    let html = '';
+
+    sentences.forEach(s => {
+        // Count real Han words (not punctuation)
+        const hanWordsCount = s.anwser.filter(c => !PUNCT.has(c)).length;
+        totalHanWords += hanWordsCount;
+
+        html += `<div class="sentence-card" data-id="${s.id}">`;
+        html += `<div class="sentence-num">Câu ${s.id}</div>`;
+
+        // Row 1: Hán Việt (luôn hiển thị)
+        html += `<div class="question-row"><span class="question">${s.question}</span></div>`;
+
+        // Row 2: Chữ Hán (ẩn/hiện từng từ)
+        html += `<div class="anwser-row">`;
+        s.anwser.forEach((ch, idx) => {
+            if (PUNCT.has(ch)) {
+                html += `<span class="anwser-punct">${ch}</span>`;
+            } else {
+                html += `<span class="anwser-word hidden" data-sid="${s.id}" data-idx="${idx}" onclick="toggleHanWord(this)">${ch}</span>`;
+            }
+        });
+        html += `</div>`;
+
+        // Row 3: Nghĩa tiếng Việt (ẩn/hiện nguyên câu)
+        html += `<div class="row-meaning"><span class="meaning-text hidden" onclick="toggleMeaning(this)">${s.meaning}</span></div>`;
+
+        html += `</div>`;
+    });
+
+    container.innerHTML = html;
+    document.getElementById('countTotal').textContent = totalHanWords;
+}
+
+// ============ TOGGLE SINGLE HAN WORD ============
+function toggleHanWord(el) {
+    el.classList.toggle('hidden');
+    el.classList.toggle('revealed');
+}
+
+// ============ TOGGLE MEANING ============
+function toggleMeaning(el) {
+    el.classList.toggle('hidden');
+    el.classList.toggle('revealed');
+}
+
+// ============ SHOW ALL ============
+function revealAll() {
+    document.querySelectorAll('.anwser-word.hidden').forEach(el => {
+        el.classList.remove('hidden');
+        el.classList.add('revealed');
+    });
+    document.querySelectorAll('.meaning-text.hidden').forEach(el => {
+        el.classList.remove('hidden');
+        el.classList.add('revealed');
+    });
+}
+
+// ============ HIDE ALL ============
+function hideAll() {
+    document.querySelectorAll('.anwser-word.revealed').forEach(el => {
+        el.classList.remove('revealed');
+        el.classList.add('hidden');
+    });
+    document.querySelectorAll('.meaning-text.revealed').forEach(el => {
+        el.classList.remove('revealed');
+        el.classList.add('hidden');
+    });
+}
+// ============ INIT ============
+renderAll();
+</script>
+
+</body>
+</html>
