@@ -1,0 +1,162 @@
+    /* ========== RESET & BASE ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* ========== PAGE-SPECIFIC STYLES ========== */
+
+        /* --- Sentence Card --- */
+        .sentence-card {
+            margin: 6px 0;
+            padding: 10px 14px;
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #eae8e8;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: box-shadow 0.3s;
+        }
+        .sentence-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.09);
+        }
+
+        /* --- Sentence Number Badge --- */
+        .sentence-num {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 0.72em;
+            font-weight: 700;
+            padding: 2px 12px;
+            border-radius: 50px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- Row: Hán Việt (đề bài, luôn hiển thị) --- */
+        .question-row {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 0.2em;
+            line-height: 1.3;
+        }
+
+        .question-row .question {
+            font-size: 1em;
+        }
+
+        /* --- Row: Chữ Hán (ẩn/hiện từng từ) --- */
+        .anwser-row {
+            display: flex;
+            flex-wrap: wrap;            /* ← cho phép wrap xuống dòng */
+            gap: 2px 4px;               /* khoảng cách giữa các từ tự nhiên */
+            margin-bottom: 0.6em;
+            padding: 6px 0;             /* giảm padding */
+            border-bottom: 1px dashed #e8e8e8;
+            line-height: 1.4;           /* gọn hơn */
+        }
+
+        .anwser-word {
+            font-family: 'KaiTi', 'Noto Serif SC', cursive;
+            font-size: 1.45em;
+            color: #1a1a2e;
+            letter-spacing: 2px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+            display: inline;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        /* Han word — Hidden */
+        .anwser-word.hidden {
+            color: transparent;
+            background: linear-gradient(135deg, #d5d5e8 0%, #c8c8da 100%);
+        }
+        .anwser-word.hidden:hover {
+            background: linear-gradient(135deg, #b8b5d4 0%, #a8a5c8 100%);
+        }
+
+        /* Han word — Revealed */
+        .anwser-word.revealed {
+            color: #1a1a2e;
+            background: rgba(255, 243, 205, 0.35);
+        }
+
+        /* Han punctuation — always visible */
+        .anwser-punct {
+            display: inline;
+            white-space: normal;        /* cho phép wrap */
+            font-family: 'KaiTi', 'Noto Serif SC', serif;
+            letter-spacing: 0px;      /* rất nhỏ hoặc 0 */
+            padding: 2px 4px;
+            font-size: 1.3em;           /* điều chỉnh phù hợp */
+            color: #999;
+            letter-spacing: 0;
+            user-select: none;
+        }
+
+        /* --- Row: Nghĩa tiếng Việt (ẩn/hiện nguyên câu) --- */
+        .row-meaning {
+            padding: 2px 0;
+            line-height: 1.0;
+        }
+
+        .meaning-text {
+            color: #DC143C;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 1em;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            padding: 2px 4px;
+        }
+
+        /* Meaning — Hidden */
+        .meaning-text.hidden {
+            color: transparent;
+            background: repeating-linear-gradient(
+                90deg,
+                #f0d0d0 0px, #f0d0d0 8px,
+                #f5dada 8px, #f5dada 12px
+            );
+            background-size: 100% 55%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .meaning-text.hidden:hover {
+            background: repeating-linear-gradient(
+                90deg,
+                #e8b0b0 0px, #e8b0b0 8px,
+                #f0c0c0 8px, #f0c0c0 12px
+            );
+            background-size: 100% 55%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        /* Meaning — Revealed */
+        .meaning-text.revealed {
+            color: #DC143C;
+            background: rgba(255, 230, 230, 0.3);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .sentence-card { padding: 14px 14px; margin: 10px 0; }
+            .anwser-row {
+                gap: 3px 6px;
+                line-height: 1.35;
+            }
+            .anwser-word { 
+                font-size: 1.25em; 
+                line-height: 1.5;       /* giảm để gọn hơn */
+                letter-spacing: 1px;    /* giảm spacing nếu cần */
+                word-break: break-all;  /* reinforce */
+            }
+            .anwser-punct { 
+                font-size: 1.15em; 
+                letter-spacing: 1.5px;  /* giảm từ 3px xuống */
+                padding: 1px 3px;       /* thu hẹp padding */}
+            .question-row { font-size: 0.95em; }
+            .meaning-text { font-size: 0.92em; }
+        }
