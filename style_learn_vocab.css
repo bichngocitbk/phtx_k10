@@ -316,10 +316,13 @@
         @media (max-width: 700px) {
             body { padding: 10px; }
             .container { padding: 15px 10px; }
-            .col-headers { grid-template-columns: 1fr; }
+            .col-headers { display: grid; grid-template-columns: 1fr;}
+            .col-pair-header:not(:first-child) { display: none; }         /* Giữ header đầu tiên, ẩn 2 cái sau */
+            .col-pair-header:first-child {  border-radius: 8px 8px 0 0; } /* làm đẹp góc */
             .vocab-grid { grid-template-columns: 1fr; }
-            .cell-han { font-size: 1.05em; }
-            .cell-hv { font-size: 0.85em; }
+            .cell-han { font-size: 1.4em; letter-spacing: 1px;}
+            .cell-hv { font-size: 1.05em; letter-spacing: 0.5px; }
             .cell-eng { font-size: 0.85em; }
             .cell-vie { font-size: 0.85em; }
+            .row-idx { font-size: 0.8em; }
         }
