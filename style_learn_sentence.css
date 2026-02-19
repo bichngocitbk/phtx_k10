@@ -152,6 +152,9 @@
                 line-height: 1.5;       /* giảm để gọn hơn */
                 letter-spacing: 1px;    /* giảm spacing nếu cần */
                 word-break: break-all;  /* reinforce */
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                text-rendering: optimizeLegibility
             }
             .anwser-punct { 
                 font-size: 1.15em; 
