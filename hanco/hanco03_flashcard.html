@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcard Hán Cổ — Ôn Tập SRS</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../style_flashcard.css">
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <a href="../" class="home-btn"><img src="../icons/home.svg" alt="Home" width="20" height="20"><span class="btn-text"> Home</span></a>
+
+  <!-- Fullscreen toggle -->
+<button class="btn-fullscreen" id="btnFullscreen" onclick="toggleFullscreen()" title="Toàn màn hình">
+  <svg id="fsIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+  </svg>
+</button>
+
+<!-- Header -->
+<header class="page-header">
+  <div class="han-title">Flashcard</div>
+  <div class="sub"> Hán Cổ giữa kỳ 3</div>
+</header>
+
+<!-- Queue info -->
+<div class="queue-bar" id="queueBar">
+  <div class="q-item"><div class="q-dot new"></div><span>Mới hôm nay:&nbsp;</span><span class="q-count" id="qNew">0</span></div>
+  <div class="q-item"><div class="q-dot review"></div><span>Ôn:&nbsp;</span><span class="q-count" id="qReview">0</span></div>
+  <div class="q-item"><div class="q-dot due"></div><span>Quá hạn:&nbsp;</span><span class="q-count" id="qDue">0</span></div>
+</div>
+
+<div class="loading-ring" id="loader"></div>
+
+<!-- Card + buttons wrapper (used by fullscreen layout) -->
+<div id="fsWrap">
+
+<!-- Flashcard -->
+<div class="card-stage" id="cardStage">
+  <div class="flashcard" id="flashcard" onclick="flipCard()">
+
+    <!-- FRONT -->
+    <div class="card-face card-front">
+      <div class="han-char" id="frontHan">—</div>
+      <div class="progress-dots" id="progressDots"></div>
+      <div class="card-hint">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5"/></svg>
+        Nhấn để lật
+      </div>
+    </div>
+
+    <!-- BACK -->
+    <div class="card-face card-back">
+      <div class="back-han-small" id="backHanSmall"></div>
+      <div class="hanviet-text" id="backHanviet">—</div>
+      <div class="meaning-divider"></div>
+      <div class="vi-meaning" id="backMeaning"></div>
+      <div class="progress-dots" id="progressDotsBack"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Show answer btn (before flip) -->
+<div class="show-btn-wrap" id="showBtnWrap">
+  <button class="show-btn" onclick="flipCard()">Hiển thị đáp án</button>
+</div>
+
+<!-- Answer buttons (after flip) -->
+<div class="answer-panel" id="answerPanel">
+  <div class="answer-grid">
+    <button class="ans-btn btn-again" onclick="answer('again')">
+      <div class="ans-label">Again</div>
+      <div class="ans-time">1 phút</div>
+    </button>
+    <button class="ans-btn btn-hard" onclick="answer('hard')">
+      <div class="ans-label">Hard</div>
+      <div class="ans-time">30 phút</div>
+    </button>
+    <button class="ans-btn btn-good" onclick="answer('good')">
+      <div class="ans-label">Good</div>
+      <div class="ans-time">1 ngày</div>
+    </button>
+    <button class="ans-btn btn-easy" onclick="answer('easy')">
+      <div class="ans-label">Easy</div>
+      <div class="ans-time">5 ngày</div>
+    </button>
+  </div>
+</div>
+
+</div><!-- end #fsWrap -->
+
+<!-- Done screen -->
+<div class="done-screen" id="doneScreen">
+  <div class="done-vie">Well Done</div>
+  <p>HĐ thử ôn thêm lần nữa nha!</p>
+  <button class="restart-btn" onclick="restartSession()">Ôn lại từ đầu ↺</button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+<script>
+// ========== SAMPLE DATA ==========
+const SAMPLE_VOCAB = [
+  { han: '仁', hanviet: 'Nhân', vi: 'Lòng nhân ái, tình thương yêu người' },
+  { han: '義', hanviet: 'Nghĩa', vi: 'Điều phải, đạo nghĩa, công bằng' },
+  { han: '禮', hanviet: 'Lễ', vi: 'Lễ nghi, phép tắc, lịch sự' },
+  { han: '智', hanviet: 'Trí', vi: 'Trí tuệ, sự khôn ngoan, hiểu biết' },
+  { han: '信', hanviet: 'Tín', vi: 'Lòng tin, sự thành thật, giữ lời' },
+];
+
+// ========== SRS STATE ==========
+const INTERVALS    = { again: 1, hard: 30, good: 1440, easy: 7200 }; // minutes
+const NEW_PER_DAY  = 15;
+
+let deck = [];
+let queue = [];
+let currentIdx = 0;
+let isFlipped = false;
+let sessionStats = { reviewed: 0, again: 0 };
+
+// ========== LOCALSTORAGE SRS ==========
+function loadSRS() {
+  try { return JSON.parse(localStorage.getItem('hanco_srs') || '{}'); }
+  catch { return {}; }
+}
+function saveSRS(data) {
+  try { localStorage.setItem('hanco_srs', JSON.stringify(data)); } catch {}
+}
+
+function getCardState(id) {
+  const srs = loadSRS();
+  return srs[id] || null;
+}
+
+function setCardState(id, state) {
+  const srs = loadSRS();
+  srs[id] = state;
+  saveSRS(srs);
+}
+
+function scheduleCard(id, rating) {
+  const srs  = loadSRS();
+  const prev = srs[id] || { nextReview: 0, interval: 0, reps: 0, firstSeen: Date.now() };
+  const now  = Date.now();
+  prev.interval   = INTERVALS[rating];
+  prev.nextReview = now + prev.interval * 60 * 1000;
+  prev.reps       = (prev.reps || 0) + 1;
+  if (!prev.firstSeen) prev.firstSeen = now;
+  setCardState(id, prev);
+}
+
+// ========== DAILY NEW CARD TRACKING ==========
+function todayKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+}
+
+function loadDailyLog() {
+  try { return JSON.parse(localStorage.getItem('hanco_daily') || '{}'); }
+  catch { return {}; }
+}
+function saveDailyLog(data) {
+  try { localStorage.setItem('hanco_daily', JSON.stringify(data)); } catch {}
+}
+
+// How many NEW cards were introduced today
+function getNewTodayCount() {
+  const log = loadDailyLog();
+  return (log[todayKey()] || []).length;
+}
+
+// Record that a new card was introduced today
+function markNewToday(id) {
+  const log = loadDailyLog();
+  const key = todayKey();
+  if (!log[key]) log[key] = [];
+  if (!log[key].includes(id)) {
+    log[key].push(id);
+    saveDailyLog(log);
+  }
+}
+
+// How many new slots remain today
+function newSlotsRemaining() {
+  return Math.max(0, NEW_PER_DAY - getNewTodayCount());
+}
+
+// ========== INIT DECK ==========
+function initDeck(vocab) {
+  deck = vocab.map((v, i) => ({ ...v, id: `card_${i}_${v.han}` }));
+  buildQueue();
+  renderQueueInfo();
+  showCard();
+}
+
+function buildQueue() {
+  const srs  = loadSRS();
+  const now  = Date.now();
+
+  // 1. Due reviews (already seen, time is up)
+  const due = deck.filter(c => srs[c.id] && now >= srs[c.id].nextReview);
+  shuffle(due);
+
+  // 2. New cards — capped by daily limit
+  const slots    = newSlotsRemaining();
+  const allNew   = deck.filter(c => !srs[c.id]);
+  shuffle(allNew);
+  const newToday = allNew.slice(0, slots);
+
+  queue = [...due, ...newToday];
+  currentIdx = 0;
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+function renderQueueInfo() {
+  const srs  = loadSRS();
+  const now  = Date.now();
+  const due  = deck.filter(c => srs[c.id] && now >= srs[c.id].nextReview).length;
+  const sched= deck.filter(c => srs[c.id] && now <  srs[c.id].nextReview).length;
+  const slots= newSlotsRemaining();
+  document.getElementById('qNew').textContent    = slots;
+  document.getElementById('qReview').textContent = sched;
+  document.getElementById('qDue').textContent    = due;
+}
+
+// ========== CARD DISPLAY ==========
+function showCard() {
+  const stage = document.getElementById('cardStage');
+  const done  = document.getElementById('doneScreen');
+  const showW = document.getElementById('showBtnWrap');
+  const panel = document.getElementById('answerPanel');
+
+  if (currentIdx >= queue.length) {
+    stage.style.display = 'none';
+    showW.style.display = 'none';
+    panel.classList.remove('visible');
+    done.style.display = 'block';
+    return;
+  }
+
+  stage.style.display = 'block';
+  done.style.display = 'none';
+  isFlipped = false;
+
+  const fc = document.getElementById('flashcard');
+  fc.classList.remove('flipped');
+
+  const card = queue[currentIdx];
+  document.getElementById('frontHan').textContent   = card.han;
+  document.getElementById('backHanSmall').textContent = card.han;
+  document.getElementById('backHanviet').textContent = card.hanviet || '—';
+  document.getElementById('backMeaning').textContent = card.vi || '';
+
+  // Progress dots
+  renderDots();
+
+  showW.style.display = 'block';
+  panel.classList.remove('visible');
+}
+
+function renderDots() {
+  const total = Math.min(queue.length, 20);
+  const make = (id) => {
+    const el = document.getElementById(id);
+    el.innerHTML = '';
+    for (let i = 0; i < total; i++) {
+      const d = document.createElement('div');
+      d.className = 'prog-dot' +
+        (i < currentIdx ? ' done' : i === currentIdx ? ' current' : '');
+      el.appendChild(d);
+    }
+  };
+  make('progressDots');
+  make('progressDotsBack');
+}
+
+function flipCard() {
+  if (isFlipped) return;
+  isFlipped = true;
+  document.getElementById('flashcard').classList.add('flipped');
+  document.getElementById('showBtnWrap').style.display = 'none';
+  setTimeout(() => {
+    document.getElementById('answerPanel').classList.add('visible');
+  }, 320);
+}
+
+function answer(rating) {
+  const card = queue[currentIdx];
+
+  // If brand-new card (never seen), log it toward today's limit
+  if (!loadSRS()[card.id]) markNewToday(card.id);
+
+  scheduleCard(card.id, rating);
+  sessionStats.reviewed++;
+  if (rating === 'again') {
+    sessionStats.again++;
+    const reinsert = Math.min(currentIdx + 5, queue.length);
+    queue.splice(reinsert, 0, card);
+  }
+
+  const labels = { again:'Ôn lại sau 1 phút', hard:'Ôn lại sau 30 phút', good:'Ôn lại sau 1 ngày', easy:'Ôn lại sau 2 ngày' };
+  showToast(labels[rating]);
+
+  renderQueueInfo();
+  currentIdx++;
+
+  // Card exit animation
+  const fc = document.getElementById('flashcard');
+  fc.style.transition = 'opacity 0.2s, transform 0.2s';
+  fc.style.opacity = '0';
+  fc.style.transform = rating === 'again'
+    ? 'translateX(-40px) rotateZ(-3deg)'
+    : 'translateX(40px) rotateZ(3deg)';
+
+  setTimeout(() => {
+    fc.style.transition = '';
+    fc.style.opacity = '';
+    fc.style.transform = '';
+    showCard();
+  }, 220);
+}
+
+function restartSession() {
+  const srs     = loadSRS();
+  const now     = Date.now();
+  const log     = loadDailyLog();
+  const todayIds= new Set(log[todayKey()] || []);
+
+  // Due reviews
+  const due = deck.filter(c => srs[c.id] && now >= srs[c.id].nextReview);
+  // Today's new cards (already introduced today, re-queue them)
+  const todayNew = deck.filter(c => todayIds.has(c.id));
+
+  shuffle(due);
+  shuffle(todayNew);
+  queue = [...due, ...todayNew];
+  currentIdx = 0;
+
+  document.getElementById('doneScreen').style.display = 'none';
+  showCard();
+}
+
+// ========== TOAST ==========
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+// ========== GOOGLE SHEET LOAD ==========
+const SPREADSHEET_ID = "1eO-Wwh0RG9qgSBFJZx6CB_6Vl44PAlApk-DB6VFzthw";
+const API_KEY = atob("WUNnQUMwdHVqMnZSS0Fzdks5dGQzaFdkYnMtQzcwS1RBeVNheklB").split("").reverse().join("");
+const SHEET_NAME = "FLASHCARD_HAN";
+
+const range = `${SHEET_NAME}!B1:C`;
+const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${range}?key=${API_KEY}`;
+
+async function fetchData() {
+  const range = encodeURIComponent(`${SHEET_NAME}!A2:C`);
+  const url   = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${range}?key=${API_KEY}`;
+
+  document.getElementById('loader').style.display = 'block';
+  document.getElementById('cardStage').style.display = 'none';
+
+  try {
+    const res  = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (!data.values?.length) throw new Error('Sheet trống');
+
+    const vocab = data.values
+      .filter(r => r[0])
+      .map(r => ({ han: r[0], hanviet: r[1] || '', vi: r[2] || '' }));
+
+    document.getElementById('loader').style.display = 'none';
+    initDeck(vocab);
+  } catch (e) {
+    document.getElementById('loader').style.display = 'none';
+    document.getElementById('loader').textContent   = '⚠ ' + e.message;
+    document.getElementById('loader').style.display = 'block';
+  }
+}
+
+// ========== FULLSCREEN ==========
+let fsActive = false;
+const FS_ICON_EXPAND = `<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>`;
+const FS_ICON_COMPRESS = `<path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 0 2-2h3M3 16h3a2 2 0 0 0 2 2v3"/>`;
+
+function toggleFullscreen() {
+  fsActive = !fsActive;
+  document.body.classList.toggle('is-fullscreen', fsActive);
+  document.getElementById('fsIcon').innerHTML = fsActive ? FS_ICON_COMPRESS : FS_ICON_EXPAND;
+}
+
+// ========== KEYBOARD SHORTCUTS ==========
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && fsActive) { toggleFullscreen(); return; }
+  if (e.key === ' ' || e.key === 'Enter') {
+    e.preventDefault();
+    if (!isFlipped) flipCard();
+  }
+  if (isFlipped) {
+    if (e.key === '1') answer('again');
+    if (e.key === '2') answer('hard');
+    if (e.key === '3') answer('good');
+    if (e.key === '4') answer('easy');
+  }
+});
+
+// ========== BOOT ==========
+fetchData();
+</script>
+</body>
+</html>
