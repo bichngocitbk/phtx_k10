@@ -306,7 +306,7 @@ function answer(rating) {
     queue.splice(reinsert, 0, card);
   }
 
-  const labels = { again:'Ôn lại sau 1 phút', hard:'Ôn lại sau 30 phút', good:'Ôn lại sau 1 ngày', easy:'Ôn lại sau 2 ngày' };
+  const labels = { again:'Ôn lại sau 1 phút', hard:'Ôn lại sau 30 phút', good:'Ôn lại sau 1 ngày', easy:'Ôn lại sau 5 ngày' };
   showToast(labels[rating]);
 
   renderQueueInfo();
