@@ -488,34 +488,66 @@ body.is-fullscreen #fsWrap {
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ===== RESPONSIVE ===== */
-/* Card lớn hơn trên màn hình rộng (desktop/laptop) */
+/* Responsive - Mobile / Tablet nhỏ */
 @media (max-width: 768px) {
-  .page-header .han-title { font-size: 2em; }
-  .hanviet-text { font-size: 1.5em; }
-  .card-stage {
-    max-width: 400px;          /* tăng đáng kể */
-  }
+
   .flashcard {
-    min-height: 340px;          /* gấp đôi so với 340px ban đầu */
-    width: 100%;
+    min-height: 280px;          /* giảm từ ~340–500px xuống còn ~2/3 */
   }
+
   .card-face {
-    padding: 30px 30px;         /* padding rộng rãi hơn */
-    border-radius: 32px;
+    padding: 40px 24px;         /* giảm mạnh padding so với 60px 60px */
+    border-radius: 16px;        /* có thể giảm bo góc nhẹ cho gọn */
+  }
+
+  .han-char {
+    font-size: 6.5em;           /* giảm từ 10em (desktop) xuống ~2/3 */
+    margin-bottom: 12px;
   }
 
   .hanviet-text {
-    font-size: 3.2em;           /* từ 1.85em → 3.2em */
-    margin-bottom: 24px;
+    font-size: 2.2em;           /* giảm từ 3.2em */
+    margin-bottom: 16px;
   }
+
   .vi-meaning {
-    font-size: 1.45em;
-    max-width: 680px;
-    line-height: 1.8;
+    font-size: 1.1em;           /* giảm từ 1.45em */
+    max-width: 90%;             /* linh hoạt hơn */
+    line-height: 1.6;
   }
+
   .back-han-small {
-    font-size: 1.8em;
-    top: 24px;
-    right: 32px;
+    font-size: 2.4em;           /* giảm từ 3.6em */
+    top: 16px;
+    right: 16px;
+  }
+
+  /* Nút Show & Answer buttons cũng nhỏ lại */
+  .show-btn {
+    padding: 14px;
+    font-size: 1.1em;
+    border-radius: 12px;
+  }
+
+  .ans-btn {
+    padding: 16px 10px 14px;
+  }
+
+  .ans-label {
+    font-size: 1.1em;
+  }
+
+  .ans-time {
+    font-size: 0.8em;
+  }
+
+  /* Queue bar & header nhỏ gọn hơn */
+  .page-header .han-title {
+    font-size: 2.2em;
+  }
+
+  .queue-bar {
+    font-size: 0.75em;
+    gap: 12px;
   }
 }
