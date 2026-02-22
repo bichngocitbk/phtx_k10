@@ -151,6 +151,7 @@ body::before {
 
 .card-back {
   transform: rotateY(180deg);
+  padding: 32px 36px;
 }
 
 /* ===== FRONT FACE ===== */
@@ -193,13 +194,14 @@ body::before {
   font-weight: 600;
   letter-spacing: 1px;
   text-align: center;
+  margin-bottom: 8px;
 }
 
 .meaning-divider {
-  width: 40px;
+  width: 50px;
   height: 1px;
   background: rgba(44,31,14,0.15);
-  margin: 8px auto 16px;
+  margin: 4px auto 8px;
 }
 
 .vi-meaning {
@@ -209,6 +211,7 @@ body::before {
   font-size: 1.45em;
   max-width: 680px;
   line-height: 1.8;
+  margin-top: 0;
 }
 
 .back-han-small {
