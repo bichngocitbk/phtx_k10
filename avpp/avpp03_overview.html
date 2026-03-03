@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Giới Thiệu Môn Học</title>
-
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@300;400;500;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
@@ -60,11 +59,11 @@
     <div id="content-area">
 
       <div class="doc-section">
-        <div class="h1-trigger" onclick="toggleSection(this)" data-target="s1">
+        <div class="h1-trigger collapsed" onclick="toggleSection(this)" data-target="s1">
           <span>I. Tổng quan môn học</span>
           <span class="toggle-chevron">▼</span>
         </div>
-        <div class="section-body" id="s1">
+        <div class="section-body collapsed" id="s1" style="max-height:0">
           <div class="prose">
             <p>Đây là trang giới thiệu tổng quan môn học <strong>Phật học từ xa</strong>. Nội dung bài học được quản lý trên <em>Google Docs</em>.</p>
             <p>Huynh đệ hãy soạn bài chỉnh chu, điều chỉnh format hoàn thiện trên Google Docs, nội dung sẽ được tự động cập nhật format lên trang web này mà không cần làm gì thêm.</p>
@@ -78,11 +77,11 @@
 
           <!-- Sub-section h2 -->
           <div class="doc-section" style="border-bottom:none;margin-bottom:0;">
-            <div class="h2-trigger" onclick="toggleSection(this)" data-target="s1a">
+            <div class="h2-trigger collapsed" onclick="toggleSection(this)" data-target="s1a">
               <span>1.1 Môn Hán Cổ</span>
               <span class="toggle-chevron">▼</span>
             </div>
-            <div class="section-body" id="s1a">
+            <div class="section-body collapsed" id="s1a" style="max-height:0">
               <div class="prose">
                 <ul>
                   <li>Phiên âm Hán Việt và dịch nghĩa từ</li>
@@ -96,18 +95,18 @@
       </div>
 
       <div class="doc-section">
-        <div class="h1-trigger" onclick="toggleSection(this)" data-target="s2">
+        <div class="h1-trigger collapsed" onclick="toggleSection(this)" data-target="s2">
           <span>II. Hướng dẫn sử dụng tài liệu</span>
           <span class="toggle-chevron">▼</span>
         </div>
-        <div class="section-body" id="s2">
+        <div class="section-body collapsed" id="s2" style="max-height:0">
           <div class="prose">
             <p>Trang học tập này được thiết kế theo chuẩn bài báo khoa học, với nội dung chính được lấy từ Google Docs. Mỗi tiêu đề có thể thu gọn để dễ điều hướng.</p>
-            <div class="h3-trigger" onclick="toggleSection(this)" data-target="s2a" style="margin-bottom:8px;">
+            <div class="h3-trigger collapsed" onclick="toggleSection(this)" data-target="s2a" style="margin-bottom:8px;">
               <span> Khi chọn heading 1/2/3 tiêu đề có thể thu gọn</span>
               <span class="toggle-chevron">▼</span>
             </div>
-            <div class="section-body" id="s2a">
+            <div class="section-body collapsed" id="s2a" style="max-height:0">
               <div class="prose">
                 <p>HD học phần tổng quan trước, rồi hãy học từng phần nhỏ chi tiết nha ạ <em>Everyone</em></p>
               </div>
@@ -117,11 +116,11 @@
       </div>
 
       <div class="doc-section">
-        <div class="h1-trigger" onclick="toggleSection(this)" data-target="s3">
+        <div class="h1-trigger collapsed" onclick="toggleSection(this)" data-target="s3">
           <span>III. Tài liệu tham khảo</span>
           <span class="toggle-chevron">▼</span>
         </div>
-        <div class="section-body" id="s3">
+        <div class="section-body collapsed" id="s3" style="max-height:0">
           <div class="prose">
             <blockquote>
               「學而時習之，不亦說乎？」<br>
@@ -152,7 +151,6 @@
 
   </aside>
 </div>
-
 <!-- ===== LEARNING TOOLS ===== -->
 <section class="learning-tools" id="learning-tools">
 <div class="tools-inner">
@@ -182,7 +180,6 @@
   </div>
 </div>
 </section>
-
 <!-- ===== FOOTER ===== -->
 <footer class="site-footer">
   <div class="footer-left">
@@ -194,33 +191,39 @@
 /* ================================================
    ⚙️ CONFIG
    ================================================ */
-const DOC_ID     = '1pw_gRkASoUYu9i0u8_J1PB04WfJMBK9NvEodX37ogJQ';
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzDqHKSi70QweW6F-IX9kXBq0vgFuyWUP33cGlpZRZPIS1Kf3Qjg_2ABB5uNXqn1BD-/exec';
-
+const DOC_ID     = atob("UUpnbzczWGRvRXZOOUtCTUpmVzQwQlAxSl84dTBpOXVZVW9TQWtSZ193cDE=").split("").reverse().join("");
+const SCRIPT_ = 'https://script.google.com/macros/s/AKfycbzDqHKSi70QweW6F-';
+const _URL = 'IX9kXBq0vgFuyWUP33cGlpZRZPIS1Kf3Qjg_2ABB5uNXqn1BD-/exec';
+const SCRIPT_URL = SCRIPT_ + _URL;
 /* ================================================
-   TOGGLE SECTION — dùng cho placeholder tĩnh
+   TOGGLE SECTION
    ================================================ */
 function toggleSection(trigger) {
   const body = document.getElementById(trigger.dataset.target);
   if (!body) return;
   const isCollapsed = body.classList.contains('collapsed');
   if (isCollapsed) {
-    body.style.maxHeight = body.scrollHeight + 'px';
+    // Mở rộng
     body.classList.remove('collapsed');
     trigger.classList.remove('collapsed');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    // Sau khi transition xong, bỏ maxHeight cứng để nội dung con có thể mở rộng tự do
+    body.addEventListener('transitionend', function onEnd() {
+      if (!body.classList.contains('collapsed')) body.style.maxHeight = 'none';
+      body.removeEventListener('transitionend', onEnd);
+    });
   } else {
+    // Thu gọn: set maxHeight về scrollHeight trước rồi mới animate về 0
     body.style.maxHeight = body.scrollHeight + 'px';
     requestAnimationFrame(() => {
-      body.style.maxHeight = '0';
-      body.classList.add('collapsed');
-      trigger.classList.add('collapsed');
+      requestAnimationFrame(() => {
+        body.style.maxHeight = '0';
+        body.classList.add('collapsed');
+        trigger.classList.add('collapsed');
+      });
     });
   }
 }
-
-document.querySelectorAll('.section-body').forEach(b => {
-  b.style.maxHeight = b.scrollHeight + 'px';
-});
 
 /* ================================================
    LOAD CONTENT
@@ -244,32 +247,22 @@ function loadFromUrl() {
    ================================================ */
 function fetchViaJsonp(scriptUrl, docId) {
   return new Promise((resolve, reject) => {
-    const cbName = 'gsc_cb_' + Date.now();
-    // ✅ dùng đúng tên param "docId" khớp với Apps Script
-    const url    = `${scriptUrl}?docId=${encodeURIComponent(docId)}&callback=${cbName}`;
-    let script;
-
-    const timer = setTimeout(() => {
-      cleanup();
-      reject(new Error('Timeout 15 giây.'));
-    }, 15000);
-
-    window[cbName] = function(data) {
-      cleanup();
-      // Apps Script trả về { html: "..." }
-      if (data && data.html) resolve(data.html);
-      else reject(new Error('Dữ liệu không hợp lệ (thiếu field html). Kiểm tra Apps Script.'));
-    };
-
-    function cleanup() {
-      clearTimeout(timer);
+    const cbName = '_cb_' + Date.now();
+    const script = document.createElement('script');
+    const timeout = setTimeout(() => {
       delete window[cbName];
-      if (script && script.parentNode) script.parentNode.removeChild(script);
-    }
-
-    script = document.createElement('script');
-    script.onerror = () => { cleanup(); reject(new Error('Không kết nối được Apps Script.')); };
-    script.src = url;
+      script.remove();
+      reject(new Error('Timeout sau 15 giây'));
+    }, 15000);
+    window[cbName] = (data) => {
+      clearTimeout(timeout);
+      delete window[cbName];
+      script.remove();
+      if (data && data.html) resolve(data.html);
+      else reject(new Error('Dữ liệu không hợp lệ'));
+    };
+    script.src = `${scriptUrl}?docId=${encodeURIComponent(docId)}&callback=${cbName}`;
+    script.onerror = () => { clearTimeout(timeout); delete window[cbName]; script.remove(); reject(new Error('Script load error')); };
     document.head.appendChild(script);
   });
 }
@@ -299,6 +292,7 @@ function parseGoogleDocsHtml(rawHtml) {
 
 /* ================================================
    RENDER HTML → collapsible H1/H2/H3 + TOC
+   Mặc định: tất cả section THU GỌN, bấm để mở
    ================================================ */
 function renderHtml(rawHtml) {
   showLoading(false);
@@ -337,7 +331,6 @@ function renderHtml(rawHtml) {
     } else if (cur) {
       cur.bodyNodes.push(node);
     }
-    // nodes trước heading đầu tiên bị bỏ qua (Google Docs thường có meta ở trên)
   });
 
   /* ---- Flat list → cây phân cấp ---- */
@@ -368,17 +361,18 @@ function renderHtml(rawHtml) {
     wrapper.className = 'doc-section';
     if (depth > 0) { wrapper.style.borderBottom = 'none'; wrapper.style.marginBottom = '0'; }
 
-    // Trigger
+    // Trigger — mặc định collapsed
     const trigger = document.createElement('div');
-    trigger.className      = trigClass;
+    trigger.className      = trigClass + ' collapsed';
     trigger.dataset.target = id;
     trigger.onclick = function() { toggleSection(this); };
     trigger.innerHTML = `<span>${sec.titleText}</span><span class="toggle-chevron">▼</span>`;
 
-    // Body
+    // Body — mặc định collapsed (ẩn)
     const body = document.createElement('div');
-    body.className = 'section-body';
+    body.className = 'section-body collapsed';
     body.id = id;
+    body.style.maxHeight = '0';
 
     // Prose
     if (sec.bodyNodes.length) {
@@ -402,18 +396,13 @@ function renderHtml(rawHtml) {
     wrapper.appendChild(body);
     parentEl.appendChild(wrapper);
 
-    // ✅ TOC: thêm cha TRƯỚC khi đệ quy vào children — giữ đúng thứ tự
+    // TOC
     if (sec.level <= 3) {
       addTocEntry(tocList, sec.titleText, id, sec.level);
     }
 
-    // Children (H2 trong H1, H3 trong H2...)
+    // Children
     sec.children.forEach(child => renderSection(child, body, depth + 1));
-
-    // Set max-height sau render
-    requestAnimationFrame(() => {
-      body.style.maxHeight = body.scrollHeight + 'px';
-    });
   }
 
   // Nếu không có heading → hiển thị raw prose
