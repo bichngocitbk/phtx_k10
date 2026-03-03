@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giới Thiệu Môn Học</title>
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@300;400;500;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style_overview.css">
+</head>
+<body>
+
+<!-- ===== TOP NAV ===== -->
+<nav class="top-nav">
+  <a class="nav-brand" href="../index.html">
+    <span class="brand-han">PHTX</span>
+    <span class="brand-text">KHÓA X<br>HỌC KỲ 3</span>
+  </a>
+  <div class="nav-links">
+    <a href="#article-body" class="nav-link active">Bài học</a>
+    <a href="#learning-tools" class="nav-link">Công cụ học</a>
+  </div>
+  <div class="nav-actions">
+    <button class="btn-load" id="btnLoad" onclick="loadFromUrl()">
+      <span>⟳</span> Tải nội dung
+    </button>
+  </div>
+</nav>
+
+<!-- ===== ARTICLE HEAD ===== -->
+<header class="article-head" id="article-head">
+  <div class="article-title-vi" id="title-vi">Văn học hán tạng — Giới thiệu tổng quan môn học</div>
+  <div class="article-title-en" id="title-en">Câu hỏi bắt buộc (30 điểm) bài Kinh Kim Cang và câu tự chọn (20 điểm) chọn 1 trong 3 bài kinh</div>
+  <div class="abstract-box" id="abstract-box" style="display:none">
+    <div class="abstract-label">Tóm tắt &nbsp;·&nbsp; Abstract</div>
+    <div class="abstract-text" id="abstract-text"></div>
+  </div>
+</header>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div class="article-layout">
+
+  <!-- ARTICLE BODY -->
+  <main class="article-body" id="article-body">
+
+    <!-- Loading state -->
+    <div class="loading-overlay" id="loadingState">
+      <div class="spinner-ring"></div>
+      <div class="loading-text">Đang tải nội dung từ Google Docs...</div>
+    </div>
+
+    <!-- Error state -->
+    <div class="error-notice" id="errorState">
+      ⚠ Không thể tải nội dung. Vui lòng thông báo Hòa Đăng An giúp.
+    </div>
+
+    <!-- Default placeholder content -->
+    <div id="content-area">
+
+      <div class="doc-section">
+        <div class="h1-trigger" onclick="toggleSection(this)" data-target="s1">
+          <span>I. Tổng quan môn học</span>
+          <span class="toggle-chevron">▼</span>
+        </div>
+        <div class="section-body" id="s1">
+          <div class="prose">
+            <p>Đây là trang giới thiệu tổng quan môn học <strong>Phật học từ xa</strong>. Nội dung bài học được quản lý trên <em>Google Docs</em>.</p>
+            <p>Huynh đệ hãy soạn bài chỉnh chu, điều chỉnh format hoàn thiện trên Google Docs, nội dung sẽ được tự động cập nhật format lên trang web này mà không cần làm gì thêm.</p>
+            <div class="term-callout">
+              <div class="term-callout-body">
+                <div class="term-callout-title">Hán Văn là gì?</div>
+                Hán Văn Cổ Đại (<span class="han">古代漢語</span>) là ngôn ngữ viết của người Hán trong thời kỳ cổ đại, được dùng làm ngôn ngữ hành chính và học thuật ở nhiều quốc gia châu Á, trong đó có Việt Nam.
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-section h2 -->
+          <div class="doc-section" style="border-bottom:none;margin-bottom:0;">
+            <div class="h2-trigger" onclick="toggleSection(this)" data-target="s1a">
+              <span>1.1 Môn Hán Cổ</span>
+              <span class="toggle-chevron">▼</span>
+            </div>
+            <div class="section-body" id="s1a">
+              <div class="prose">
+                <ul>
+                  <li>Phiên âm Hán Việt và dịch nghĩa từ</li>
+                  <li>Hiểu cấu trúc câu văn Hán cổ và các mẫu ngữ pháp cơ bản</li>
+                  <li>Dịch được các đoạn văn ngắn từ Hán văn sang tiếng Việt và ngược lại từ Hán Việt sang Hán văn</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <div class="h1-trigger" onclick="toggleSection(this)" data-target="s2">
+          <span>II. Hướng dẫn sử dụng tài liệu</span>
+          <span class="toggle-chevron">▼</span>
+        </div>
+        <div class="section-body" id="s2">
+          <div class="prose">
+            <p>Trang học tập này được thiết kế theo chuẩn bài báo khoa học, với nội dung chính được lấy từ Google Docs. Mỗi tiêu đề có thể thu gọn để dễ điều hướng.</p>
+            <div class="h3-trigger" onclick="toggleSection(this)" data-target="s2a" style="margin-bottom:8px;">
+              <span> Khi chọn heading 1/2/3 tiêu đề có thể thu gọn</span>
+              <span class="toggle-chevron">▼</span>
+            </div>
+            <div class="section-body" id="s2a">
+              <div class="prose">
+                <p>HD học phần tổng quan trước, rồi hãy học từng phần nhỏ chi tiết nha ạ <em>Everyone</em></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <div class="h1-trigger" onclick="toggleSection(this)" data-target="s3">
+          <span>III. Tài liệu tham khảo</span>
+          <span class="toggle-chevron">▼</span>
+        </div>
+        <div class="section-body" id="s3">
+          <div class="prose">
+            <blockquote>
+              「學而時習之，不亦說乎？」<br>
+              <em>Học mà thường xuyên ôn tập, chẳng phải vui sao?</em><br>
+              <span style="font-size:0.85em;color:var(--ink-muted);">— Luận Ngữ, Khổng Tử</span>
+            </blockquote>
+            <p>Nội dung được cập nhật thường xuyên trên Google Docs và đồng bộ tự động với trang học này.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content-area -->
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="article-sidebar">
+
+    <div class="toc-widget">
+      <div class="widget-label">Mục lục · Contents</div>
+      <ul class="toc-list" id="toc-list">
+        <li class="toc-item"><a href="#s1" class="toc-link toc-h1">I. Tổng quan môn học</a></li>
+        <li class="toc-item"><a href="#s1a" class="toc-link toc-h2">1.1 Môn Hán Cổ</a></li>
+        <li class="toc-item"><a href="#s2" class="toc-link toc-h1">II. Hướng dẫn sử dụng</a></li>
+        <li class="toc-item"><a href="#s2a" class="toc-link toc-h3">Apps Script Proxy</a></li>
+        <li class="toc-item"><a href="#s3" class="toc-link toc-h1">III. Tài liệu tham khảo</a></li>
+      </ul>
+    </div>
+
+  </aside>
+</div>
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-left">
+    © 2026 · Tài liệu học tập mở · Phiên bản 2.0
+  </div>
+</footer>
+
+<script>
+/* ================================================
+   ⚙️ CONFIG
+   ================================================ */
+const DOC_ID     = '1kYjyw6Mn5yOnZF7gjpYV_RDIrwbK5Mt2NUnZkJ2TLKo';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzDqHKSi70QweW6F-IX9kXBq0vgFuyWUP33cGlpZRZPIS1Kf3Qjg_2ABB5uNXqn1BD-/exec';
+
+/* ================================================
+   TOGGLE SECTION — dùng cho placeholder tĩnh
+   ================================================ */
+function toggleSection(trigger) {
+  const body = document.getElementById(trigger.dataset.target);
+  if (!body) return;
+  const isCollapsed = body.classList.contains('collapsed');
+  if (isCollapsed) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    body.classList.remove('collapsed');
+    trigger.classList.remove('collapsed');
+  } else {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => {
+      body.style.maxHeight = '0';
+      body.classList.add('collapsed');
+      trigger.classList.add('collapsed');
+    });
+  }
+}
+
+document.querySelectorAll('.section-body').forEach(b => {
+  b.style.maxHeight = b.scrollHeight + 'px';
+});
+
+/* ================================================
+   LOAD CONTENT
+   ================================================ */
+function loadFromUrl() {
+  if (!DOC_ID || DOC_ID === 'YOUR_DOC_ID_HERE' ||
+      !SCRIPT_URL || SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+    showError('Chưa cấu hình DOC_ID hoặc SCRIPT_URL.');
+    return;
+  }
+  showLoading(true);
+  hideError();
+  fetchViaJsonp(SCRIPT_URL, DOC_ID)
+    .then(rawHtml => renderHtml(rawHtml))
+    .catch(err => { showLoading(false); showError('Lỗi: ' + err.message); });
+}
+
+/* ================================================
+   JSONP — bypass CORS
+   Apps Script phải trả về: callback({ html: "..." })
+   ================================================ */
+function fetchViaJsonp(scriptUrl, docId) {
+  return new Promise((resolve, reject) => {
+    const cbName = 'gsc_cb_' + Date.now();
+    // ✅ dùng đúng tên param "docId" khớp với Apps Script
+    const url    = `${scriptUrl}?docId=${encodeURIComponent(docId)}&callback=${cbName}`;
+    let script;
+
+    const timer = setTimeout(() => {
+      cleanup();
+      reject(new Error('Timeout 15 giây.'));
+    }, 15000);
+
+    window[cbName] = function(data) {
+      cleanup();
+      // Apps Script trả về { html: "..." }
+      if (data && data.html) resolve(data.html);
+      else reject(new Error('Dữ liệu không hợp lệ (thiếu field html). Kiểm tra Apps Script.'));
+    };
+
+    function cleanup() {
+      clearTimeout(timer);
+      delete window[cbName];
+      if (script && script.parentNode) script.parentNode.removeChild(script);
+    }
+
+    script = document.createElement('script');
+    script.onerror = () => { cleanup(); reject(new Error('Không kết nối được Apps Script.')); };
+    script.src = url;
+    document.head.appendChild(script);
+  });
+}
+
+/* ================================================
+   PARSE HTML TỪ GOOGLE DOCS
+   ================================================ */
+function parseGoogleDocsHtml(rawHtml) {
+  const parser = new DOMParser();
+  const doc    = parser.parseFromString(rawHtml, 'text/html');
+  const body   = doc.body;
+  if (!body) return document.createElement('div');
+
+  body.querySelectorAll('[style]').forEach(el => el.removeAttribute('style'));
+  body.querySelectorAll('[class]').forEach(el => el.removeAttribute('class'));
+  body.querySelectorAll('[id]').forEach(el    => el.removeAttribute('id'));
+
+  body.querySelectorAll('span').forEach(span => {
+    if (!span.innerHTML.trim()) span.remove();
+    else span.replaceWith(...span.childNodes);
+  });
+  body.querySelectorAll('div:empty').forEach(el => el.remove());
+
+  const wrapper = body.querySelector('div');
+  return (wrapper && wrapper.children.length > 2) ? wrapper : body;
+}
+
+/* ================================================
+   RENDER HTML → collapsible H1/H2/H3 + TOC
+   ================================================ */
+function renderHtml(rawHtml) {
+  showLoading(false);
+
+  const source = parseGoogleDocsHtml(rawHtml);
+  const nodes  = Array.from(source.childNodes);
+  const area   = document.getElementById('content-area');
+  const tocList = document.getElementById('toc-list');
+  area.innerHTML  = '';
+  tocList.innerHTML = '';
+
+  /* ---- Tìm [ABSTRACT] ---- */
+  nodes.forEach(node => {
+    if (node.nodeType !== Node.ELEMENT_NODE) return;
+    const txt = node.textContent.trim();
+    if (txt.startsWith('[ABSTRACT]')) {
+      const text = node.innerHTML.replace(/\[ABSTRACT\]/g, '').trim();
+      document.getElementById('abstract-text').innerHTML = text;
+      document.getElementById('abstract-box').style.display = 'block';
+      node._skip = true;
+    }
+  });
+
+  /* ---- Gom nodes thành flat sections theo heading ---- */
+  const HTAGS = ['H1','H2','H3','H4'];
+  const lvl   = el => parseInt(el.tagName[1]);
+  const sections = [];
+  let cur = null;
+
+  nodes.forEach(node => {
+    if (node._skip) return;
+    const isH = node.nodeType === Node.ELEMENT_NODE && HTAGS.includes(node.tagName);
+    if (isH) {
+      cur = { level: lvl(node), titleText: node.textContent.trim(), bodyNodes: [], children: [] };
+      sections.push(cur);
+    } else if (cur) {
+      cur.bodyNodes.push(node);
+    }
+    // nodes trước heading đầu tiên bị bỏ qua (Google Docs thường có meta ở trên)
+  });
+
+  /* ---- Flat list → cây phân cấp ---- */
+  function buildTree(list) {
+    const root = [], stack = [];
+    list.forEach(sec => {
+      const node = { ...sec };
+      while (stack.length && stack[stack.length-1].level >= node.level) stack.pop();
+      if (stack.length === 0) root.push(node);
+      else stack[stack.length-1].children.push(node);
+      stack.push(node);
+    });
+    return root;
+  }
+
+  const tree = buildTree(sections);
+
+  /* ---- Render từng section ---- */
+  let counter = 0;
+
+  function renderSection(sec, parentEl, depth) {
+    counter++;
+    const id = 'gs_' + counter;
+    const trigClass = sec.level === 1 ? 'h1-trigger'
+                    : sec.level === 2 ? 'h2-trigger' : 'h3-trigger';
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'doc-section';
+    if (depth > 0) { wrapper.style.borderBottom = 'none'; wrapper.style.marginBottom = '0'; }
+
+    // Trigger
+    const trigger = document.createElement('div');
+    trigger.className      = trigClass;
+    trigger.dataset.target = id;
+    trigger.onclick = function() { toggleSection(this); };
+    trigger.innerHTML = `<span>${sec.titleText}</span><span class="toggle-chevron">▼</span>`;
+
+    // Body
+    const body = document.createElement('div');
+    body.className = 'section-body';
+    body.id = id;
+
+    // Prose
+    if (sec.bodyNodes.length) {
+      const prose = document.createElement('div');
+      prose.className = 'prose';
+      sec.bodyNodes.forEach(n => {
+        if (n.nodeType === Node.ELEMENT_NODE && n.textContent.trim().startsWith('[INFO]')) {
+          const box = document.createElement('div');
+          box.className = 'term-callout';
+          box.innerHTML = `<div class="term-callout-body">💡 ${n.innerHTML.replace(/\[INFO\]/g,'').trim()}</div>`;
+          prose.appendChild(box);
+        } else {
+          prose.appendChild(n.cloneNode(true));
+        }
+      });
+      wrapCJK(prose);
+      body.appendChild(prose);
+    }
+
+    wrapper.appendChild(trigger);
+    wrapper.appendChild(body);
+    parentEl.appendChild(wrapper);
+
+    // ✅ TOC: thêm cha TRƯỚC khi đệ quy vào children — giữ đúng thứ tự
+    if (sec.level <= 3) {
+      addTocEntry(tocList, sec.titleText, id, sec.level);
+    }
+
+    // Children (H2 trong H1, H3 trong H2...)
+    sec.children.forEach(child => renderSection(child, body, depth + 1));
+
+    // Set max-height sau render
+    requestAnimationFrame(() => {
+      body.style.maxHeight = body.scrollHeight + 'px';
+    });
+  }
+
+  // Nếu không có heading → hiển thị raw prose
+  if (tree.length === 0) {
+    const prose = document.createElement('div');
+    prose.className = 'prose';
+    nodes.forEach(n => { if (!n._skip) prose.appendChild(n.cloneNode(true)); });
+    wrapCJK(prose);
+    area.appendChild(prose);
+  } else {
+    tree.forEach(sec => renderSection(sec, area, 0));
+  }
+}
+
+function addTocEntry(tocList, text, id, level) {
+  const li = document.createElement('li');
+  li.className = 'toc-item';
+  const a = document.createElement('a');
+  a.className   = `toc-link toc-h${level}`;
+  a.textContent = text;
+  a.href = '#' + id;
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const bodyEl = document.getElementById(id);
+    const trigEl = bodyEl && bodyEl.previousElementSibling;
+    if (bodyEl && bodyEl.classList.contains('collapsed') && trigEl) toggleSection(trigEl);
+    setTimeout(() => { if (bodyEl) bodyEl.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60);
+  });
+  li.appendChild(a);
+  tocList.appendChild(li);
+}
+
+/* ================================================
+   WRAP CJK — áp font Hán tự động
+   ================================================ */
+function wrapCJK(container) {
+  const re = /([\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFF]+)/g;
+  function process(node) {
+    if (node.nodeType === Node.TEXT_NODE && re.test(node.textContent)) {
+      re.lastIndex = 0;
+      const frag = document.createElement('span');
+      frag.innerHTML = node.textContent.replace(re, '<span class="han">$1</span>');
+      node.replaceWith(...frag.childNodes);
+    } else if (node.nodeType === Node.ELEMENT_NODE && !['SCRIPT','STYLE','CODE','PRE'].includes(node.tagName)) {
+      Array.from(node.childNodes).forEach(process);
+    }
+  }
+  container.querySelectorAll('p, li, td, blockquote').forEach(el => Array.from(el.childNodes).forEach(process));
+}
+
+/* ================================================
+   UI HELPERS
+   ================================================ */
+function showLoading(show) {
+  document.getElementById('loadingState').classList.toggle('active', show);
+  document.getElementById('btnLoad').disabled = show;
+  document.getElementById('content-area').style.display = show ? 'none' : '';
+}
+function showError(msg) {
+  const el = document.getElementById('errorState');
+  el.textContent = '⚠ ' + msg;
+  el.classList.add('active');
+}
+function hideError() { document.getElementById('errorState').classList.remove('active'); }
+
+/* ================================================
+   AUTO-LOAD
+   ================================================ */
+window.addEventListener('load', () => loadFromUrl());
+</script>
+</body>
+</html>
