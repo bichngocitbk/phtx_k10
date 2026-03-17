@@ -110,8 +110,8 @@ const SAMPLE_VOCAB = [
 ];
 
 // ========== SRS STATE ==========
-const INTERVALS    = { again: 1, hard: 30, good: 1440, easy: 7200 }; // minutes
-const NEW_PER_DAY  = 30;
+const INTERVALS    = { again: 1, hard: 30, good: 1440, easy: 2880 }; // minutes
+const NEW_PER_DAY  = 100;
 
 let deck = [];
 let queue = [];
@@ -305,7 +305,7 @@ function answer(rating) {
     queue.splice(reinsert, 0, card);
   }
 
-  const labels = { again:'Ôn lại sau 1 phút', hard:'Ôn lại sau 30 phút', good:'Ôn lại sau 1 ngày', easy:'Ôn lại sau 5 ngày' };
+  const labels = { again:'Ôn lại sau 1 phút', hard:'Ôn lại sau 30 phút', good:'Ôn lại sau 1 ngày', easy:'Ôn lại sau 2 ngày' };
   showToast(labels[rating]);
 
   renderQueueInfo();
